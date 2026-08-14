@@ -42,10 +42,10 @@ class DiscriminatorLearns(Scene):
         needle.move_to(line.point_from_proportion(0.5))  # start center
 
         cases = [
-            ("Real digit",      0.92, BLUE_C),
-            ("Random noise",    0.05, ORANGE),
-            ("Bad fake digit",  0.12, ORANGE),
-            ("Good fake digit", 0.55, YELLOW),
+            ("Real face",      0.92, BLUE_C),
+            ("Random noise",   0.05, ORANGE),
+            ("Bad fake face",  0.12, ORANGE),
+            ("Good fake face", 0.55, YELLOW),
         ]
 
         case_lbl = Text("", font=LABEL_FONT, font_size=26)
@@ -72,7 +72,7 @@ class DiscriminatorLearns(Scene):
         # ── 2. Key insight: D learns a boundary ───────────────────────────
         insight = Text(
             "The discriminator doesn't need to understand\n"
-            '"what a digit is."\n'
+            '"what a face is."\n'
             "It only needs a boundary separating real from fake.",
             font=LABEL_FONT, font_size=28,
         )

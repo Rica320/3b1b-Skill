@@ -1,10 +1,23 @@
 from manimlib import *
+from pathlib import Path
 import numpy as np
 
 # ── Beat 3: Introducing the Discriminator (3:30–4:15) ─────────────────────
 
 LABEL_FONT = "CMU Serif"
 BG         = BLACK
+ASSETS     = Path(__file__).parent / "assets" / "faces"
+
+
+def photo_thumb(filename: str, color=WHITE, height: float = 0.8) -> Group:
+    """A face photo with a thin colored border, standing in for one example."""
+    img = ImageMobject(str(ASSETS / filename))
+    img.set_height(height)
+    border = Rectangle(width=img.get_width(), height=img.get_height())
+    border.set_stroke(color, width=2)
+    border.set_fill(opacity=0)
+    border.move_to(img)
+    return Group(img, border)
 
 
 class DiscriminatorIntro(Scene):
@@ -47,12 +60,10 @@ class DiscriminatorIntro(Scene):
 
         # ── 3. Full diagram ────────────────────────────────────────────────
         # real path
-        real_box = Square(side_length=0.8)
-        real_box.set_stroke(BLUE_C, 2)
-        real_box.set_fill(BLUE_C, opacity=0.15)
+        real_box = photo_thumb("real_00.png", BLUE_C)
         real_box.move_to(LEFT * 5.5 + UP * 1.4)
         real_lbl = Text("real", font=LABEL_FONT, font_size=20)
-        real_lbl.set_color(BLUE_C).move_to(real_box)
+        real_lbl.set_color(BLUE_C).next_to(real_box, UP, buff=0.1)
 
         # fake path
         z_dot = Dot(radius=0.1, color=ORANGE)
@@ -67,12 +78,10 @@ class DiscriminatorIntro(Scene):
         g_lbl = Text("G", font=LABEL_FONT, font_size=22).set_color(YELLOW)
         g_lbl.move_to(g_box)
 
-        fake_box = Square(side_length=0.8)
-        fake_box.set_stroke(ORANGE, 2)
-        fake_box.set_fill(ORANGE, opacity=0.15)
+        fake_box = photo_thumb("fake_blend.png", ORANGE)
         fake_box.move_to(LEFT * 1.2 + DOWN * 1.4)
         fake_lbl = Text("fake", font=LABEL_FONT, font_size=20)
-        fake_lbl.set_color(ORANGE).move_to(fake_box)
+        fake_lbl.set_color(ORANGE).next_to(fake_box, DOWN, buff=0.1)
 
         # merge arrows
         d_box.move_to(RIGHT * 1.8)
@@ -112,13 +121,13 @@ class DiscriminatorIntro(Scene):
         self.wait(2.0)
 
         self.play(
-            FadeOut(VGroup(d_box, d_lbl, question,
-                           real_box, real_lbl,
-                           z_dot, z_lbl,
-                           g_box, g_lbl,
-                           fake_box, fake_lbl,
-                           arr_real, arr_z, arr_gf, arr_fake,
-                           arr_out, output)),
+            FadeOut(Group(d_box, d_lbl, question,
+                          real_box, real_lbl,
+                          z_dot, z_lbl,
+                          g_box, g_lbl,
+                          fake_box, fake_lbl,
+                          arr_real, arr_z, arr_gf, arr_fake,
+                          arr_out, output)),
             run_time=0.8,
         )
         self.wait(0.2)

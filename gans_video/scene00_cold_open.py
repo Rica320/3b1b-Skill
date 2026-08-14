@@ -1,25 +1,28 @@
 from manimlib import *
+from pathlib import Path
 import numpy as np
 
 
 # ── Beat 0: Cold open — "Can you tell which is real?" (0:00–0:45) ──────────
-# Digits represented as glowing pixel-grid squares; images zoom out into a
-# point-cloud.  No voiceover — timing set for ~45 s of narration cadence.
+# Real face photos zoom out into a point-cloud. No voiceover — timing set
+# for ~45 s of narration cadence.
 
 REAL_COLOR   = BLUE_C
 FAKE_COLOR   = ORANGE
 BG           = BLACK
 LABEL_FONT   = "CMU Serif"
+ASSETS       = Path(__file__).parent / "assets" / "faces"
 
 
-def digit_square(val: int, color=WHITE, side=0.7) -> VGroup:
-    """Tiny labeled square that stands in for a handwritten digit."""
-    sq = Square(side_length=side)
-    sq.set_stroke(color, width=2)
-    sq.set_fill(color, opacity=0.12)
-    num = Text(str(val), font=LABEL_FONT, font_size=22).set_color(color)
-    num.move_to(sq)
-    return VGroup(sq, num)
+def photo_thumb(filename: str, color=WHITE, height: float = 0.9) -> Group:
+    """A face photo with a thin colored border, standing in for one example."""
+    img = ImageMobject(str(ASSETS / filename))
+    img.set_height(height)
+    border = Rectangle(width=img.get_width(), height=img.get_height())
+    border.set_stroke(color, width=2)
+    border.set_fill(opacity=0)
+    border.move_to(img)
+    return Group(img, border)
 
 
 class ColdOpen(Scene):
@@ -33,16 +36,14 @@ class ColdOpen(Scene):
         self.play(Write(title), run_time=1.5)
         self.wait(0.5)
 
-        # ── 2. Six real digits spread across screen ───────────────────────
-        digits_vals = [3, 7, 1, 9, 4, 0]
-        digits = VGroup(*[
-            digit_square(v, REAL_COLOR) for v in digits_vals
-        ])
-        digits.arrange(RIGHT, buff=0.45)
-        digits.move_to(ORIGIN)
+        # ── 2. Six real face photos spread across screen ───────────────────
+        real_files = [f"real_{i:02d}.png" for i in range(6)]
+        photos = Group(*[photo_thumb(f, REAL_COLOR) for f in real_files])
+        photos.arrange(RIGHT, buff=0.45)
+        photos.move_to(ORIGIN)
 
         self.play(
-            LaggedStart(*[FadeIn(d, shift=DOWN * 0.2) for d in digits],
+            LaggedStart(*[FadeIn(p, shift=DOWN * 0.2) for p in photos],
                         lag_ratio=0.15),
             run_time=1.8
         )
@@ -51,28 +52,22 @@ class ColdOpen(Scene):
         # ── 3. Label: "Real examples" ─────────────────────────────────────
         real_lbl = Text("Real examples", font=LABEL_FONT, font_size=28)
         real_lbl.set_color(REAL_COLOR)
-        real_lbl.next_to(digits, DOWN, buff=0.4)
+        real_lbl.next_to(photos, DOWN, buff=0.4)
         self.play(FadeIn(real_lbl), run_time=0.6)
         self.wait(0.8)
 
-        # ── 4. One digit morphs into another  ─────────────────────────────
-        morph_src = digit_square(3, REAL_COLOR, side=1.1)
-        morph_tgt = digit_square(8, REAL_COLOR, side=1.1)
-        morph_src.move_to(digits[0])
-        morph_tgt.move_to(digits[0])
-
-        self.play(Transform(digits[0], morph_src), run_time=0.4)
-        self.play(Transform(digits[0], morph_tgt), run_time=1.2)
+        # ── 4. Look closer at one of them ───────────────────────────────────
+        self.play(FlashAround(photos[0], color=REAL_COLOR), run_time=1.0)
         self.wait(0.4)
 
-        # ── 5. A "generated" image slides in — looks plausible ─────────────
-        fake_d = digit_square(3, FAKE_COLOR, side=0.7)
-        fake_d.next_to(digits, RIGHT, buff=0.6)
+        # ── 5. A "generated" photo slides in — looks plausible ─────────────
+        fake_photo = photo_thumb("fake_blend.png", FAKE_COLOR)
+        fake_photo.next_to(photos, RIGHT, buff=0.6)
         fake_lbl = Text("Generated?", font=LABEL_FONT, font_size=22)
         fake_lbl.set_color(FAKE_COLOR)
-        fake_lbl.next_to(fake_d, DOWN, buff=0.25)
+        fake_lbl.next_to(fake_photo, DOWN, buff=0.25)
 
-        self.play(FadeIn(fake_d, shift=LEFT * 0.3), run_time=0.7)
+        self.play(FadeIn(fake_photo, shift=LEFT * 0.3), run_time=0.7)
         self.play(Write(fake_lbl), run_time=0.5)
         self.wait(1.0)
 
@@ -88,12 +83,11 @@ class ColdOpen(Scene):
         self.play(Write(q2), run_time=1.4)
         self.wait(1.0)
 
-        # ── 7. Zoom out: digits become dots in a point-cloud ──────────────
-        all_shown = VGroup(digits, fake_d, fake_lbl, real_lbl)
+        # ── 7. Zoom out: photos become dots in a point-cloud ──────────────
         dots = VGroup(*[
-            Dot(d.get_center(), radius=0.07, color=REAL_COLOR)
-            for d in digits
-        ] + [Dot(fake_d.get_center(), radius=0.07, color=FAKE_COLOR)])
+            Dot(p.get_center(), radius=0.07, color=REAL_COLOR)
+            for p in photos
+        ] + [Dot(fake_photo.get_center(), radius=0.07, color=FAKE_COLOR)])
 
         # Extra random cloud of points suggesting a large distribution
         rng = np.random.default_rng(42)
@@ -107,8 +101,8 @@ class ColdOpen(Scene):
         ])
 
         self.play(
-            *[Transform(d, dots[i]) for i, d in enumerate(digits)],
-            Transform(fake_d, dots[-1]),
+            FadeOut(photos), FadeOut(fake_photo),
+            FadeIn(dots),
             FadeOut(fake_lbl),
             FadeOut(real_lbl),
             run_time=1.5,
@@ -131,6 +125,6 @@ class ColdOpen(Scene):
         self.play(Write(dist_lbl), run_time=1.4)
         self.wait(2.0)
 
-        self.play(FadeOut(VGroup(title, dist_lbl, cloud_pts, dots, fake_d, digits)),
+        self.play(FadeOut(VGroup(title, dist_lbl, cloud_pts, dots)),
                   run_time=1.0)
         self.wait(0.3)

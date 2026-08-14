@@ -1,4 +1,5 @@
 from manimlib import *
+from pathlib import Path
 import numpy as np
 
 # ── Beat 9: What happens when training succeeds? (11:15–12:30) ────────────
@@ -7,6 +8,7 @@ import numpy as np
 
 LABEL_FONT = "CMU Serif"
 BG         = BLACK
+ASSETS     = Path(__file__).parent / "assets" / "faces"
 
 
 class LatentInterpolation(Scene):
@@ -64,42 +66,38 @@ class LatentInterpolation(Scene):
         img_box.set_stroke(WHITE, 1.5)
         img_box.move_to(RIGHT * 3.5 + DOWN * 0.2)
 
-        t_tracker = ValueTracker(0)
-        steps = 8
+        steps = 8  # 9 precomputed frames: interp_00.png .. interp_08.png,
+                   # a real pixel-level alpha blend between two faces at
+                   # each t, not a simulated color/label change.
 
         for step in range(steps + 1):
             t = step / steps
             z_t = (1 - t) * z1_pos + t * z2_pos
 
-            # color lerp: orange → yellow
+            # border lerp: orange → yellow, tracks progress along the walk
             col = interpolate_color(ORANGE, YELLOW, t)
-            new_dot = Dot(z_t, radius=0.1, color=WHITE)
-
-            # "image" approximated as a colored square with digit label
-            # digit smoothly interpolates 3 → 7
-            digit_val = int(np.round(3 + t * 4))
-            new_img = Square(side_length=2.0)
-            new_img.set_stroke(col, 2)
-            new_img.set_fill(col, opacity=0.12)
+            new_img = ImageMobject(str(ASSETS / f"interp_{step:02d}.png"))
+            new_img.set_height(1.8)
             new_img.move_to(RIGHT * 3.5 + DOWN * 0.2)
-            num_lbl = Text(str(digit_val), font=LABEL_FONT, font_size=52)
-            num_lbl.set_color(col).move_to(new_img)
+            new_border = Rectangle(width=new_img.get_width(), height=new_img.get_height())
+            new_border.set_stroke(col, 2)
+            new_border.move_to(new_img)
 
             t_lbl = Tex(f"t = {t:.2f}", font_size=28).set_color(GREY_A)
-            t_lbl.next_to(new_img, DOWN, buff=0.25)
+            t_lbl.next_to(img_box, DOWN, buff=0.25)
 
             if step == 0:
-                self.play(
-                    ShowCreation(img_box),
-                    run_time=0.4,
-                )
-                cur_img = VGroup(new_img, num_lbl)
+                self.play(ShowCreation(img_box), run_time=0.4)
+                cur_img = Group(new_img, new_border)
                 cur_t   = t_lbl
                 self.play(FadeIn(cur_img), Write(cur_t), run_time=0.5)
             else:
+                prev_img = cur_img
+                cur_img = Group(new_img, new_border)
                 self.play(
                     interp_dot.animate.move_to(z_t),
-                    Transform(cur_img, VGroup(new_img, num_lbl)),
+                    FadeOut(prev_img),
+                    FadeIn(cur_img),
                     Transform(cur_t, t_lbl),
                     run_time=0.55,
                 )
@@ -124,8 +122,8 @@ class LatentInterpolation(Scene):
         self.wait(2.0)
 
         self.play(
-            FadeOut(VGroup(lat_box, lat_title, img_box, cur_img,
-                           img_title, pipe_lbl)),
+            FadeOut(Group(lat_box, lat_title, img_box, cur_img,
+                          img_title, pipe_lbl)),
             run_time=0.8,
         )
         self.wait(0.2)

@@ -38,11 +38,12 @@ class DistributionsChase(Scene):
         # ── Real distribution — stays fixed ──────────────────────────────
         real_curve = axes.get_graph(
             lambda x: gaussian_pdf(x, mu=1.5, sigma=0.8),
+            x_range=(-5, 5),
             color=REAL_C,
         )
-        real_area = axes.get_area(
+        real_area = axes.get_area_under_graph(
             real_curve, x_range=(-5, 5),
-            color=REAL_C, opacity=0.15,
+            fill_color=REAL_C, fill_opacity=0.15,
         )
         real_lbl = Text("real data  p_data", font=LABEL_FONT, font_size=22)
         real_lbl.set_color(REAL_C)
@@ -56,11 +57,12 @@ class DistributionsChase(Scene):
         fake_mu_start = -2.5
         fake_curve = axes.get_graph(
             lambda x: gaussian_pdf(x, mu=fake_mu_start, sigma=1.0),
+            x_range=(-5, 5),
             color=FAKE_C,
         )
-        fake_area = axes.get_area(
+        fake_area = axes.get_area_under_graph(
             fake_curve, x_range=(-5, 5),
-            color=FAKE_C, opacity=0.15,
+            fill_color=FAKE_C, fill_opacity=0.15,
         )
         fake_lbl = Text("generated  p_G", font=LABEL_FONT, font_size=22)
         fake_lbl.set_color(FAKE_C)
@@ -97,11 +99,12 @@ class DistributionsChase(Scene):
         for step, (mu, sigma) in enumerate(zip(target_mus, target_sigmas)):
             new_fake = axes.get_graph(
                 lambda x, m=mu, s=sigma: gaussian_pdf(x, m, s),
+                x_range=(-5, 5),
                 color=FAKE_C,
             )
-            new_area = axes.get_area(
+            new_area = axes.get_area_under_graph(
                 new_fake, x_range=(-5, 5),
-                color=FAKE_C, opacity=0.15,
+                fill_color=FAKE_C, fill_opacity=0.15,
             )
             step_lbl = Text(
                 f"Training step {step + 1}",

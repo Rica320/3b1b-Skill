@@ -1,10 +1,23 @@
 from manimlib import *
+from pathlib import Path
 import numpy as np
 
 # ── Beat 10: Final synthesis — "A GAN is a feedback loop" (12:30–13:30) ───
 
 LABEL_FONT = "CMU Serif"
 BG         = BLACK
+ASSETS     = Path(__file__).parent / "assets" / "faces"
+
+
+def photo_thumb(filename: str, color=WHITE, height: float = 0.55) -> Group:
+    """A face photo with a thin colored border, standing in for one example."""
+    img = ImageMobject(str(ASSETS / filename))
+    img.set_height(height)
+    border = Rectangle(width=img.get_width(), height=img.get_height())
+    border.set_stroke(color, width=2)
+    border.set_fill(opacity=0)
+    border.move_to(img)
+    return Group(img, border)
 
 
 class FinalSynthesis(Scene):
@@ -34,12 +47,14 @@ class FinalSynthesis(Scene):
         z_lbl.next_to(z_dot, LEFT, buff=0.1)
 
         # real data input
-        real_dot = Dot(radius=0.1, color=BLUE_C)
+        real_dot = photo_thumb("real_00.png", BLUE_C)
         real_dot.move_to(LEFT * 4.0 + DOWN * 0.5)
         real_lbl = Text("real data", font=LABEL_FONT, font_size=20)
-        real_lbl.set_color(BLUE_C).next_to(real_dot, LEFT, buff=0.1)
+        real_lbl.set_color(BLUE_C).next_to(real_dot, LEFT, buff=0.15)
 
-        # "fake data" label
+        # fake data: a small photo icon on the G -> D path
+        fake_icon = photo_thumb("fake_blend.png", ORANGE)
+        fake_icon.move_to(g_box.get_bottom() + DOWN * 0.6)
         fake_lbl = Text("fake data", font=LABEL_FONT, font_size=20)
         fake_lbl.set_color(ORANGE).move_to(RIGHT * 0.3 + UP * 0.7)
 
@@ -48,13 +63,13 @@ class FinalSynthesis(Scene):
                           buff=0.05, color=GREY)
         arr_g_fake = Arrow(g_box.get_bottom(),
                            g_box.get_bottom() + DOWN * 0.6,
-                           buff=0, color=ORANGE)
+                           buff=0.3, color=ORANGE)
         arr_fake_d = Arrow(g_box.get_bottom() + DOWN * 0.6,
                            d_box.get_top() + LEFT * 0.3,
-                           buff=0.05, color=ORANGE)
+                           buff=0.3, color=ORANGE)
         arr_real_d = Arrow(real_dot.get_right(),
                            d_box.get_left(),
-                           buff=0.05, color=BLUE_C)
+                           buff=0.3, color=BLUE_C)
 
         # feedback path: D → bottom → back up to G
         feedback_pts = [
@@ -74,10 +89,10 @@ class FinalSynthesis(Scene):
             (feedback_pts[1] + feedback_pts[2]) / 2 + DOWN * 0.25
         )
 
-        objs = VGroup(
+        objs = Group(
             z_dot, z_lbl, g_box, g_lbl,
             d_box, d_lbl, real_dot, real_lbl,
-            fake_lbl,
+            fake_icon, fake_lbl,
             arr_z_g, arr_g_fake, arr_fake_d, arr_real_d,
             feedback_path, feedback_lbl,
         )
@@ -94,7 +109,7 @@ class FinalSynthesis(Scene):
             GrowArrow(arr_g_fake),
             GrowArrow(arr_fake_d),
             GrowArrow(arr_real_d),
-            FadeIn(fake_lbl),
+            FadeIn(fake_icon), FadeIn(fake_lbl),
             run_time=0.9,
         )
         self.play(ShowCreation(feedback_path), Write(feedback_lbl),
@@ -103,8 +118,8 @@ class FinalSynthesis(Scene):
 
         # ── 2. Strip labels progressively until only the loop remains ─────
         self.play(
-            FadeOut(VGroup(z_dot, z_lbl, real_dot, real_lbl, fake_lbl,
-                           feedback_lbl)),
+            FadeOut(Group(z_dot, z_lbl, real_dot, real_lbl,
+                          fake_icon, fake_lbl, feedback_lbl)),
             run_time=0.8,
         )
         self.wait(0.5)

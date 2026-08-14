@@ -124,7 +124,7 @@ class TheGame(Scene):
         self.play(FadeOut(VGroup(d_ann, g_ann)), run_time=0.4)
 
         full_obj = Tex(
-            r"\min_G \max_D \;"
+            r"\min_G \max_D \,"
             r"\mathbb{E}_{x \sim p_{\text{data}}}[\log D(x)]"
             r" + "
             r"\mathbb{E}_{z \sim p_z}[\log(1 - D(G(z)))]",
@@ -136,7 +136,7 @@ class TheGame(Scene):
 
         # Highlight term 1: real data
         term1_box = SurroundingRectangle(
-            full_obj[0][len(r"\min_G \max_D \;"):len(r"\min_G \max_D \;") + 30],
+            full_obj[0][len(r"\min_G \max_D \,"):len(r"\min_G \max_D \,") + 30],
             color=BLUE_C, buff=0.06,
         )
         t1_lbl = Text(

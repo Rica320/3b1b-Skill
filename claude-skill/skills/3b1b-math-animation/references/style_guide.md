@@ -2,6 +2,11 @@
 
 This is what actually makes output look like 3Blue1Brown rather than "generic Manim." Pedagogy and visuals are inseparable in his work — the visual choices exist to serve the explanation.
 
+> **This file covers visual language and motion grammar.** The enforceable rules
+> live in `animation_rules.md`, the narrative shape in `narrative_template.md`,
+> the known failure modes in `anti_patterns.md`, and the gates in
+> `checklists.md`. Read those first; this is the texture layer.
+
 ## Pedagogical shape
 
 - **Open with a concrete question or puzzle**, not a definition. The abstract idea shows up later, earned.
@@ -30,7 +35,7 @@ This is what actually makes output look like 3Blue1Brown rather than "generic Ma
 | "Here's a new object, appearing all at once" | `FadeIn(mobj)`, or `Write(mobj)` for text/equations (draws the strokes) |
 | "This object is literally the same thing as that one, reshaped" | `Transform(a, b)` or `ReplacementTransform(a, b)` |
 | "Remove without ceremony" | `FadeOut(mobj)` |
-| "Look here" | `Indicate(mobj)`, `Flash(point)`, `Circumscribe(mobj)` |
+| "Look here" | `Indicate(mobj)`, `Flash(point)`, `FlashAround(mobj)` (not `Circumscribe` — that's Community Edition only; ManimGL has no `Circumscribe` class) |
 | "The camera should move/zoom to follow this" | `self.play(self.camera.frame.animate.move_to(...))` (moving-camera scenes) |
 | "This equation rearranges into that one" | Build both `Tex(...)` mobjects with matching substrings, then `TransformMatchingTex(eq1, eq2)` |
 
@@ -41,12 +46,12 @@ This is what actually makes output look like 3Blue1Brown rather than "generic Ma
 - Timing `run_time=` on `self.play(...)` calls to roughly match how long the corresponding line would take to say aloud (~2.5–3 words/second as a rough baseline).
 - Adding a `self.wait()` beat after any reveal that needs a moment to sink in.
 
-## Quality checklist before calling a scene "done"
+## Quality checklist
 
-- [ ] One idea per screen; nothing crowds the frame
-- [ ] Color mapping is consistent with earlier scenes in the same video
-- [ ] Every equation/label uses `Tex`/`Text` (not a static image) so it can be color-coded and animated
-- [ ] Transitions between related visuals use `Transform`/camera movement rather than a hard cut
-- [ ] A `self.wait()` beat exists after key reveals
-- [ ] Draft-quality render reviewed (frame-checked) before spending time on a full-quality render
-- [ ] The math is actually correct — a beautiful animation of a wrong claim is worse than no animation
+Superseded by `checklists.md`, which has the full pre-render and post-render
+gates plus the commands to run them. The one item worth repeating here:
+
+- [ ] **The math is actually correct** — a beautiful animation of a wrong claim
+      is worse than no animation. Prefer a metaphor that *is* the real object
+      (compute the field you are drawing) so the visual cannot drift from the
+      truth.

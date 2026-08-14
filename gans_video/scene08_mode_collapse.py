@@ -1,10 +1,23 @@
 from manimlib import *
+from pathlib import Path
 import numpy as np
 
 # ── Beat 8: Mode collapse (10:00–11:15) ───────────────────────────────────
 
 LABEL_FONT = "CMU Serif"
 BG         = BLACK
+ASSETS     = Path(__file__).parent / "assets" / "faces"
+
+
+def photo_thumb(filename: str, color=WHITE, height: float = 0.65) -> Group:
+    """A face photo with a thin colored border, standing in for one example."""
+    img = ImageMobject(str(ASSETS / filename))
+    img.set_height(height)
+    border = Rectangle(width=img.get_width(), height=img.get_height())
+    border.set_stroke(color, width=2)
+    border.set_fill(opacity=0)
+    border.move_to(img)
+    return Group(img, border)
 
 
 def gaussian_pdf(x, mu, sigma):
@@ -26,61 +39,51 @@ class ModeCollapse(Scene):
 
         # ── 2. Show diverse output first, then collapse ────────────────────
         diverse_lbl = Text(
-            "Good training: diverse digits",
+            "Good training: diverse faces",
             font=LABEL_FONT, font_size=26,
         ).set_color(GREEN)
         diverse_lbl.move_to(UP * 1.5)
         self.play(Write(diverse_lbl), run_time=0.7)
 
-        digit_vals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        diverse_digits = VGroup()
-        for i, v in enumerate(digit_vals):
-            box = Square(side_length=0.65)
-            box.set_stroke(BLUE_C, 2)
-            box.set_fill(BLUE_C, opacity=0.10)
-            num = Text(str(v), font=LABEL_FONT, font_size=22).set_color(BLUE_C)
-            num.move_to(box)
-            grp = VGroup(box, num)
-            grp.move_to(LEFT * 4.0 + RIGHT * i * 0.8 + ORIGIN)
-            diverse_digits.add(grp)
+        real_files = [f"real_{i:02d}.png" for i in range(8)]
+        diverse_photos = Group()
+        for i, fname in enumerate(real_files):
+            thumb = photo_thumb(fname, BLUE_C)
+            thumb.move_to(LEFT * 3.5 + RIGHT * i * 1.0 + ORIGIN)
+            diverse_photos.add(thumb)
 
         self.play(
-            LaggedStart(*[FadeIn(d, shift=UP * 0.15) for d in diverse_digits],
+            LaggedStart(*[FadeIn(d, shift=UP * 0.15) for d in diverse_photos],
                         lag_ratio=0.08),
             run_time=1.2,
         )
         self.wait(0.8)
 
-        # ── 3. Collapse to all-3s ─────────────────────────────────────────
+        # ── 3. Collapse to the same fake face everywhere ────────────────────
         collapse_lbl = Text(
-            "Mode collapse: generator always outputs \"3\"",
+            "Mode collapse: generator always outputs the same face",
             font=LABEL_FONT, font_size=26,
         ).set_color(ORANGE)
         collapse_lbl.move_to(UP * 1.5)
 
-        collapsed_digits = VGroup()
-        for i in range(10):
-            box = Square(side_length=0.65)
-            box.set_stroke(ORANGE, 2)
-            box.set_fill(ORANGE, opacity=0.10)
-            num = Text("3", font=LABEL_FONT, font_size=22).set_color(ORANGE)
-            num.move_to(box)
-            grp = VGroup(box, num)
-            grp.move_to(LEFT * 4.0 + RIGHT * i * 0.8 + ORIGIN)
-            collapsed_digits.add(grp)
+        collapsed_photos = Group()
+        for i in range(8):
+            thumb = photo_thumb("fake_blend.png", ORANGE)
+            thumb.move_to(LEFT * 3.5 + RIGHT * i * 1.0 + ORIGIN)
+            collapsed_photos.add(thumb)
 
         self.play(
             FadeOut(diverse_lbl),
             Write(collapse_lbl),
-            *[Transform(diverse_digits[i], collapsed_digits[i])
-              for i in range(10)],
+            FadeOut(diverse_photos),
+            FadeIn(collapsed_photos),
             run_time=1.5,
         )
         self.wait(1.0)
 
         # ── 4. Latent-space cloud collapses ───────────────────────────────
         self.play(
-            FadeOut(VGroup(diverse_digits, collapsed_digits, collapse_lbl)),
+            FadeOut(Group(diverse_photos, collapsed_photos, collapse_lbl)),
             run_time=0.6,
         )
 
