@@ -1,84 +1,59 @@
-# Python
+# ── Render output ────────────────────────────────────────────────────────
+# ManimGL writes videos/ and images/ next to the scene file; render_meta.json
+# and _field_cache/ are regenerated on every run.
+images/
+_field_cache/
+render_meta.json
+partial_movie_file_list.txt
+
+# ── Generated assets ─────────────────────────────────────────────────────
+# Derived from the Olivetti faces dataset by examples/gans/prepare_assets.py.
+# Not redistributed here — run that script once before rendering.
+examples/gans/assets/faces/
+
+# ── Python ───────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
+.eggs/
 .installed.cfg
-*.egg
 MANIFEST
 
-# Virtual environments
+# ── Virtual environments ─────────────────────────────────────────────────
 env/
 venv/
+.venv/
 ENV/
-env.bak/
-venv.bak/
 
+# ── LaTeX / ffmpeg leavings ──────────────────────────────────────────────
+*.log
+*.aux
+*.dvi
+tex/
 
-# IDE
+# ── Local configuration ──────────────────────────────────────────────────
+# Note: each example's own custom_config.yml IS tracked — it is part of the
+# example. Only machine-local overrides are ignored.
+settings.local.json
+*.local
+.env
+.env.local
+
+# ── Editors and OS ───────────────────────────────────────────────────────
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
-.project
-.pydevproject
-.settings/
-*.sublime-project
-*.sublime-workspace
-
-# Manim/Output files
-output/
-output_v2/
-videos/
-_field_cache/
-partial_movie_file_list.txt
-*.gif
-*.mp4
-*.webm
-*.png
-*.jpg
-*.jpeg
-
-# Local configuration
-settings.local.json
-custom_config.yml
-*.local
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb
-
-# Logs
-*.log
-logs/
-
-# Dependencies
-.env
-.env.local
-
-# OS
-.DS_Store
 Thumbs.db
 
-# Temporary files
+# ── Notebooks and scratch ────────────────────────────────────────────────
+.ipynb_checkpoints/
+.cache/
 *.tmp
 *.temp
-.cache/
