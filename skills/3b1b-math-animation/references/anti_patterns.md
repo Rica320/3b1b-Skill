@@ -5,10 +5,11 @@ confirmed in the pixels, and has a verified fix. When writing scene code, check
 against this list before rendering — most of these are invisible in the source
 and only appear on screen.
 
-#1–#12 are ordered by how much damage they cause. #13–#17 are the 3D-specific
+#1–#12 are ordered by how much damage they cause. #13–#18 are the 3D-specific
 ones; they only apply to scenes with a tilted camera, and every measurement in
 them came from rendering the failing case and counting the pixels. See
-`three_d.md` for the positive version of those rules.
+`three_d.md` for the positive version of those rules. #19–#22 are the audio
+ones, measured on a narrated render; see `narration.md`.
 
 ---
 
@@ -446,6 +447,143 @@ one height per (x, y). Markers sitting on a surface need the same treatment.
 signature as content falling off the edge and as a hard cut. `orbit()` and
 `spin()` record the window; a hand-written `frame.animate.reorient(...)` does
 not.
+
+---
+
+## #18 — Building a 3D solid out of `Square`, `Polygon` or any other VMobject
+
+**Damage: catastrophic, and it does not look like a bug.** A Rubik's cube built
+from `Square`s rendered *inside out*: every face turned toward the camera was
+missing, and the interior of the far side showed through the gap.
+
+A VMobject's fill is not a filled polygon. ManimGL draws it by winding number
+in screen space, and a polygon seen from behind winds the other way, so the
+fill cancels to nothing. In 2D this never comes up — everything faces the
+camera. In 3D exactly half of any closed object faces away.
+
+The give-away is that the *far* geometry renders and the *near* geometry does
+not, which reads as a depth-test bug and is not one. Turning the depth test
+off does not help; nor does draw order.
+
+```python
+face = Square(side_length=1).set_fill(GREEN, 1)      # a hole, from one side
+face = Square3D(side_length=1, color=GREEN, opacity=1)   # a face, from both
+```
+
+`Square3D`, `Disk3D`, `Cube`, `Prism` and `Sphere` are `Surface` subclasses and
+have no winding problem. They also take `shading`, which is what makes six
+identically-coloured faces distinguishable. Strokes are fine either way — a
+stroke has no fill to wind — so an outline drawn over a solid can stay a
+VMobject, and should, since `Surface` has no stroke.
+
+Two consequences worth knowing before you hit them:
+
+- A `Surface` cannot go in a `VGroup`. Use `Group`.
+- **Two coincident faces z-fight, and the fix is a gap, not a bigger offset.**
+  This is #17 again in a different costume, and it took two passes to get
+  right, so both passes are worth writing down.
+
+  On the cube, each cubie's outer face sits at 0.5 of a cubie from its centre
+  and its neighbour's inner face sits at 0.5 from *its* centre — the same
+  plane. Both are black, which is why it looks harmless, but they carry
+  opposite normals and therefore different shading, so the depth test hands a
+  thin strip to one and the rest to the other. Measured, magnified 3×: **a
+  grey hairline down the middle of every black channel on the cube**, crawling
+  as the camera moves.
+
+  Pushing the *stickers* further forward does not touch that — they were never
+  the pair that was fighting. Shrinking the cubie body to 0.97 so neighbours
+  are 0.03 apart does, and the channels go solid black.
+
+  The stickers then want the opposite treatment. At 0.03 proud of the body
+  they stand off it: the far side's stickers poke past the silhouette as
+  coloured hairlines, and up close the tiles look like they are hovering.
+  0.008 of a cubie is 0.0096 world units at this scale — still four times what
+  the depth buffer needed, and sub-pixel at 1080p.
+
+  **A seam artifact can hide a pacing defect.** After the seams were fixed,
+  `verify_render.py` check [3] reported a 12.6 s frozen hold that had passed
+  every earlier run. It had always been there; the z-fighting was churning
+  enough pixels on its own to keep the frame-to-frame delta above the freeze
+  threshold. Any check that measures "did anything change" can be fooled by
+  something changing for the wrong reason, so re-run the full suite after
+  fixing a rendering artifact — not just the check that was failing.
+
+---
+
+## #19 — Fitting the narration to the animation
+
+**Damage: structural.** It forces every later choice.
+
+A spoken line has one correct duration. Speed it up and it gabbles; stretch it
+and it drags. A hold is any length you like. So the audio is the rigid thing
+and it has to be cut first — synthesise the script, measure each line, and let
+the scene wait for real durations. Fitting words to a finished render leaves
+only two options at every beat, both bad: overlap the next line, or cut the
+sentence.
+
+The scene then records the frame each line starts on and the mux lays each file
+down there. **If the result is out of sync, do not adjust the mux** — the scene
+and the audio were built from different versions of the script.
+
+Related: cue the line *before* writing the caption, not after. The voice starts
+as the words appear. Cueing after the `Write` puts every line ~1.3s late and
+the error accumulates.
+
+---
+
+## #20 — Keeping the spoken words in the scene file
+
+**Damage: moderate, and it compounds.** Two copies of a sentence means the one
+that gets edited is not the one that gets spoken.
+
+Put every line in `script.yaml` under a beat id and refer to it by id. The
+narration can then be read as prose — the only way to hear whether it is an
+argument or a list — and the voice can be recast without touching animation
+code. `Narrator.dump()` reports beats no cue used; a beat you wrote and forgot
+to place is silent in the render and invisible in review.
+
+---
+
+## #21 — Asking the TTS engine for the pauses
+
+**Damage: silent desync that grows.** The duration the scene waited for has to
+be the duration the file actually is.
+
+Engine break tags drift or are ignored, and engines pad their output
+unpredictably: measured on Kokoro, the same sentence returned with between
+30 ms and 210 ms of lead-in depending on the first phoneme. That padding lands
+inside the gap the scene reserved for the line, and the next line starts a
+little later, and the one after that a little later still.
+
+`tts.py` writes `[[0.4]]` as a real 0.4 s of digital silence: each side is
+synthesised separately, trimmed, and rejoined. Identical on every engine, and
+exactly as long as it says.
+
+---
+
+## #22 — Narration with no gaps in it
+
+**Damage: measured.** A first cut of the Rubik's video was **92% speech**, and
+the same cut had frozen holds of **14.2 s** and **12.7 s**.
+
+Those are one defect seen from two sides: the words were doing all the work,
+and the picture was doing none. `verify_audio.py` fails above 88% coverage and
+`verify_render.py` check [3] fails a still frame that outlasts any plausible
+line, so a video like this fails both.
+
+The fix is never to trim the script uniformly. It is:
+
+- where a long line sits over a still frame, **show the claim** — "every turn
+  moves nine cubies at once" became one layer lit, turned, and turned back;
+- where the video needs air, spend a **wordless beat** with slow motion under
+  it — `spin(self, 3.5, speed=-5.0)`, nothing said — after the driving
+  question, after the payoff, and on the one image the section was built to
+  reach.
+
+Target 75–85% coverage. Passing the checks is a side effect of the picture
+carrying its share.
+
 
 ---
 

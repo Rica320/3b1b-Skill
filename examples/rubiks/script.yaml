@@ -1,0 +1,191 @@
+# Narration for "What do you actually memorise?"
+#
+# The only place the spoken words exist. rubiks.py refers to these ids and
+# contains no prose, so the voice can be recast without touching the animation.
+#
+#   ../../skills/3b1b-math-animation/scripts/tts.py script.yaml --out audio
+#
+# [[0.4]] is an explicit pause of that many seconds, cut in exactly.
+#
+# Every number spoken here is computed in verify_cube.py, not estimated:
+# 43,252,003,274,489,856,000 states, 99 moves in the solve, 7 distinct
+# sequences, longest 11 moves, and (R U R' U') to the sixth is the identity.
+
+voice:
+  engine: kokoro
+  name: am_michael
+  speed: 0.92
+
+beats:
+  # ── §0  the question ──────────────────────────────────────────────────
+  - id: s0.open
+    text: >
+      This is a solved Rubik's cube. [[0.35]] Watch what twenty turns
+      do to it.
+
+  - id: s0.count
+    text: >
+      There are forty-three quintillion arrangements it could now be in.
+      [[0.4]] Check one of them every second and you would need about a
+      hundred times the age of the universe to see them all.
+
+  - id: s0.question
+    text: >
+      So nobody is memorising a way out of each position. [[0.5]] Which
+      leaves a real question: what does somebody who can solve this
+      actually know?
+
+  # ── §1  the obvious answer, and what it costs ─────────────────────────
+  - id: s1.obvious
+    text: >
+      The obvious answer is that you learn where every piece belongs, and
+      you put it there. One piece at a time.
+
+  - id: s1.place
+    text: >
+      Here is a white edge. It belongs on the bottom, on the orange side.
+      One turn, and it is home.
+
+  - id: s1.next
+    text: >
+      Now the next white edge. It is up here, and it belongs at the back.
+
+  - id: s1.break
+    text: >
+      To bring it down you have to turn that same right-hand face. [[0.3]]
+      Keep your eye on the piece you just finished.
+
+  - id: s1.lesson
+    text: >
+      Every turn moves nine little cubes at once. On this object there is
+      no such thing as fixing one thing and leaving the rest alone. That is
+      the entire difficulty, and it is why a Rubik's cube is hard and a
+      jigsaw is not.
+
+  - id: s1.rewind
+    text: >
+      There is exactly one method that always works. Retrace every move,
+      backwards. [[0.4]] Watch it come apart in reverse, and land, exactly,
+      on solved.
+
+  - id: s1.useless
+    text: >
+      Perfectly correct, and completely useless. You would have had to
+      stand there and watch the scramble happen.
+
+  # ── §2  the detour ────────────────────────────────────────────────────
+  - id: s2.idea
+    text: >
+      But look at why that worked. A move and the undo of that move cancel
+      each other exactly. [[0.4]] Keep the cancelling. Throw away the part
+      where you have to remember everything.
+
+  - id: s2.out
+    text: >
+      Turn the right face. Call it R. Eight pieces move, and this corner
+      here is now up in the top layer.
+
+  - id: s2.errand
+    text: >
+      The corner is out of the way, so now turn the top. The bottom layer
+      cannot feel this at all.
+
+  - id: s2.back
+    text: >
+      And now undo the first turn. [[0.3]] R backwards. Every piece that R
+      disturbed goes back to exactly where it was.
+
+  - id: s2.damage
+    text: >
+      Exactly where it was, except for the two that were away when the top
+      turned. Out of everything on this cube, one corner and one edge have
+      changed, and the rest is untouched.
+
+  - id: s2.name
+    text: >
+      Out, do something, back. That is a detour. You leave by a road and
+      you come home by the same road, and the only thing that is different
+      is what happened while you were gone.
+
+  - id: s2.four
+    text: >
+      One more turn of the top to tidy up, and you have four moves. This
+      little sequence is most of what solving a cube is.
+
+  # ── §3  the detour is a loop ──────────────────────────────────────────
+  - id: s3.claim
+    text: >
+      And here is the strange gift buried in that. If a sequence puts back
+      everything it disturbs, then doing it over and over has to bring you
+      home.
+
+  - id: s3.run
+    text: >
+      The same four moves. Again. [[0.3]] And again.
+
+  - id: s3.solved
+    text: >
+      Six times through. Twenty-four moves. And the cube is not close to
+      how it started, it is exactly how it started. Nothing was aimed. It
+      simply had nowhere else to go.
+
+  # ── §4  the method ────────────────────────────────────────────────────
+  - id: s4.plan
+    text: >
+      So here is the whole method. Build the bottom layer by hand, where
+      you can still see what you are doing. Then never touch it again.
+      Everything above it gets solved with detours that put the bottom
+      layer back every time.
+
+  - id: s4.cross
+    text: >
+      First the white cross. There is no sequence for this one. You just
+      look at it, and turn the four edges down.
+
+  - id: s4.corners
+    text: >
+      Then the four white corners, and this is the detour you already
+      have. Put a corner above its slot and run those four moves until it
+      drops in. Sometimes once, sometimes five times.
+
+  - id: s4.middle
+    text: >
+      The middle layer takes a longer detour, eight moves, that walks an
+      edge out of the top and into the side of the cube. There is a
+      left-handed version and a right-handed one. They are the same
+      sequence in a mirror.
+
+  - id: s4.yellowcross
+    text: >
+      Now the top. One sequence turns the yellow edges face up.
+
+  - id: s4.yellowface
+    text: >
+      A second twists the corners without disturbing anything underneath.
+
+  - id: s4.place
+    text: >
+      And two more shuffle the last pieces into place. Every one of them is
+      a detour, so every one of them hands the rest of the cube back
+      exactly as it found it.
+
+  # ── §5  payoff ────────────────────────────────────────────────────────
+  - id: s5.count
+    text: >
+      Ninety-nine moves, from that scramble to this. Seven different
+      sequences, two of which are the same one mirrored, and the longest is
+      eleven moves.
+
+  - id: s5.restate
+    text: >
+      So: what does somebody who can solve this actually know?
+
+  - id: s5.answer
+    text: >
+      Not positions. [[0.45]] Detours. A short list of paths that leave and
+      come back, and an order to spend them in.
+
+  - id: s5.close
+    text: >
+      Forty-three quintillion arrangements. [[0.4]] Seven short sequences
+      to remember.

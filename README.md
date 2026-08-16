@@ -15,6 +15,8 @@ along with the measurements.
 skills/3b1b-math-animation/   the skill itself — install this
 examples/gans/                a 6-minute explainer on GANs, plus its audit trail
 examples/harmonic/            a 90-second scene, written from the skill alone
+examples/rubiks/              a 5-minute narrated 3D scene with a synthesised
+                              voice track, and a cube that is provably a cube
 examples/saddle/              a 95-second 3D scene, where the camera move is
                               the argument
 ```
@@ -110,20 +112,21 @@ write `videos/Harmonic.mp4`. If it fails, the exact error-to-fix table is in
 
 ## Running the examples
 
-The examples follow the same three steps. **Run them from their own
+The examples follow the same steps. **Run them from their own
 directory** — ManimGL reads `custom_config.yml` (pure black background, CMU
 Serif, 1080p) from the current working directory, and rendering from elsewhere
 silently gives you ManimGL's default dark-grey background instead.
 
-| | `examples/gans` | `examples/harmonic` | `examples/saddle` |
-|---|---|---|---|
-| Runtime | 6:15 | 1:25 | 1:35 |
-| Scene | `GANs` in `gans.py` | `Harmonic` in `harmonic.py` | `Saddle` in `saddle.py` |
-| Needs assets | yes — one prep step | no | no |
-| Narration script | `SCRIPT.md` | in the module docstring | in the module docstring |
-| Dimensions | 2D | 2D | 3D |
+| | `examples/gans` | `examples/harmonic` | `examples/saddle` | `examples/rubiks` |
+|---|---|---|---|---|
+| Runtime | 6:15 | 1:25 | 1:35 | 4:58 |
+| Scene | `GANs` in `gans.py` | `Harmonic` in `harmonic.py` | `Saddle` in `saddle.py` | `Rubiks` in `rubiks.py` |
+| Needs assets | yes — one prep step | no | no | yes — synthesise the narration |
+| Narration script | `SCRIPT.md` | in the module docstring | in the module docstring | `script.yaml`, and it is spoken |
+| Dimensions | 2D | 2D | 3D | 3D |
+| Audio | silent | silent | silent | **narrated** |
 
-### 1. Prepare assets (GANs example only)
+### 1. Prepare assets (GANs and Rubik's examples)
 
 ```bash
 cd examples/gans
@@ -134,6 +137,23 @@ Downloads the Olivetti faces dataset via scikit-learn and writes 18 PNGs to
 `assets/faces/`. These are not committed — they are derived from a
 third-party dataset, so this repository generates them rather than
 redistributing them. One-time, a few seconds.
+
+For the Rubik's example the asset is the **voice**, and it has to exist before
+the render rather than after it: the scene asks the audio how long each spoken
+line is and paces itself to the answer.
+
+```bash
+bash skills/3b1b-math-animation/scripts/setup_env.sh --tts   # one time, 353 MB
+
+cd examples/rubiks
+python ../../skills/3b1b-math-animation/scripts/tts.py script.yaml --out audio
+```
+
+That runs Kokoro locally — Apache-2.0, about 5× realtime on CPU, no API key.
+Twelve seconds for the 31 beats. To use a different voice, or to clone one,
+edit the `voice:` block at the top of `script.yaml`; see
+`skills/3b1b-math-animation/references/narration.md` for what makes a usable
+reference clip.
 
 ### 2. Render
 
@@ -148,7 +168,18 @@ bash ../../skills/3b1b-math-animation/scripts/render.sh gans.py GANs
 Output lands in `videos/`. `render.sh` picks the right invocation for your
 platform and finds `manimgl` in a project virtualenv if one exists.
 
-### 3. Verify the pixels
+### 3. Lay the narration down (narrated examples)
+
+```bash
+python ../../skills/3b1b-math-animation/scripts/mux_audio.py \
+    videos/Rubiks.mp4 --cues narration_cues.json
+```
+
+Each line is placed at the frame the scene recorded for it, and the mix is
+loudness-normalised to −16 LUFS in two passes. Nothing here searches for sync:
+the scene already waited for the exact length of every file.
+
+### 4. Verify the pixels
 
 ```bash
 python ../../skills/3b1b-math-animation/scripts/verify_render.py \
@@ -172,6 +203,29 @@ hard-cut checks stay strict everywhere else instead of being loosened globally
 to tolerate two intentional close-ups.
 
 Exit status is non-zero if any check fails, so it drops into CI unchanged.
+
+### 5. Verify the audio (narrated examples)
+
+```bash
+python ../../skills/3b1b-math-animation/scripts/verify_audio.py \
+    videos/Rubiks_narrated.mp4 --cues narration_cues.json
+```
+
+```
+[1] audio stream present ...... pass (aac, 48000 Hz, +0.00s vs picture)
+[2] loudness / true peak ...... pass (-16.5 LUFS, -1.4 dBTP)
+[3] line overlap / overrun .... pass (31 lines)
+[4] speech present at each cue  pass (31/31 cues land on sound)
+[5] narration coverage ........ pass (87% of 298s)
+[6] longest wordless stretch .. pass (6.9s max gap)
+```
+
+Check [4] is the one worth having. Every other check — and every part of the
+pipeline upstream of it — can be perfectly self-consistent and still be
+describing the wrong seconds, because a scene re-rendered after the script
+changed produces a cue sheet that agrees with itself and points nowhere. Check
+[4] runs a silence detector over the finished mix and asks whether there is
+actually sound where each line was cued.
 
 There is also a build-time text-overlap audit, which walks every visible `Text`
 and `Tex` at every hold and reports pairs sharing screen space:
@@ -208,6 +262,17 @@ Two findings drove most of the skill's rules, and both are invisible in source:
 The harmonic example is the control: a scene written from the skill's
 documentation alone, with no other reference, to test whether the written rules
 are sufficient on their own.
+
+The Rubik's example is the narrated one, and it is where the audio pipeline was
+worked out and measured. It is also the one with a claim to check that no pixel
+test can reach: the cube in it is a real cube. Its state is 26 cubie rotations
+rather than four permutation arrays, so no impossible position can be
+represented; the rendered stickers are read back off the geometry and compared
+against the model after every stage; the solver solves 300 of 300 random
+scrambles using only the beginner's method's own sequences; and
+`verify_cube.py` checks every number the voice says — the state count, the
+"hundred times the age of the universe", the order of `R U R' U'` being exactly
+six — against the code that produced the animation.
 
 The saddle example is the 3D one, and it was built the same way as the GANs
 rebuild: each 3D rule in the skill was derived by rendering the failing version
@@ -251,8 +316,15 @@ examples/
 │   └── docs/{DEFECTS,VERIFICATION}.md
 ├── harmonic/
 │   └── harmonic.py
-└── saddle/
-    └── saddle.py                  the 3D worked example
+├── saddle/
+│   └── saddle.py                  the 3D worked example
+└── rubiks/
+    ├── script.yaml                every spoken line; the scene has no prose
+    ├── rubiks.py                  the narrated worked example
+    ├── cube_model.py              a cube that cannot hold an illegal state
+    ├── cube_view.py               the geometry, cross-checked against it
+    ├── solver.py                  the beginner's method, as a search
+    └── verify_cube.py             every number the narration says
 ```
 
 The examples import `manim_helpers.py` from `skills/` rather than keeping their

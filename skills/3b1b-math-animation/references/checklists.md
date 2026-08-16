@@ -18,6 +18,19 @@ Run before spending time on a full-quality render.
 - [ ] Every symbol is introduced *after* the picture it names.
 - [ ] The payoff restates the opening question verbatim and answers it.
 
+### Narration
+- [ ] Every spoken line lives in `script.yaml`; the scene file contains no
+      prose, only beat ids.
+- [ ] `tts.py` has been run and `audio/narration.json` exists — a scene built
+      against estimated durations will not sync.
+- [ ] The voice and speed are settled. Changing either re-cuts every file and
+      re-times the whole render.
+- [ ] Read the script aloud as prose. It should sound like an argument, not a
+      list of facts about a picture.
+- [ ] Pauses (`[[0.4]]`) at the places a person would think, roughly one every
+      two or three sentences.
+- [ ] At least three beats where nothing is said and the picture carries it.
+
 ### Structure
 - [ ] The whole video is **one `Scene`** with section methods, not N scenes to
       concatenate.
@@ -42,7 +55,12 @@ Run before spending time on a full-quality render.
 - [ ] Connectors are drawn after the things they connect.
 - [ ] Every `LaggedStart`/`stagger` has a deliberate `lag_ratio`; no group
       pops in simultaneously.
-- [ ] Holds vary with content; narrated captions pass `narration=`.
+- [ ] Holds vary with content; narrated captions pass a beat id, and
+      `Caption` has a `narrator=`.
+- [ ] Every line that runs over later animations uses `hold=False` plus
+      `nar.finish(self)` — not a caption that waits the line out first.
+- [ ] `nar.dump(...)` at the end of `construct`, and it reports **no** unused
+      beats.
 - [ ] No dead code.
 - [ ] `dump_meta(self, "render_meta.json")` at the end of `construct`.
 
@@ -54,6 +72,12 @@ Run before spending time on a full-quality render.
       space.
 - [ ] No flat 2D mobject stacked on a filled one without `flat()`.
 - [ ] Dots in space are `dot3d()`/`TrueDot`, not `Dot`.
+- [ ] Solid bodies are built from `Surface` subclasses (`Square3D`, `Cube`,
+      `Sphere`), never from filled `Square`/`Polygon` VMobjects — grep for
+      `Square(` and `Polygon(` and confirm each is stroke-only
+      (ANTI-PATTERN #18).
+- [ ] Nothing opaque is coincident with anything else; faces that must sit on
+      top are lifted clear by ~3% of the object, not by a thousandth.
 - [ ] Curves and markers drawn on a surface are lifted clear of it
       (`slice_curve` does this; `lift=0.05` by default).
 - [ ] Surfaces have a mesh and non-zero shading; opacity ≈ 0.85.
@@ -139,7 +163,30 @@ the start of an orbit can be sitting on top of the geometry halfway through, and
 a surface that reads as a saddle from one angle reads as a plain bowl from
 another. Both were caught this way in `examples/saddle/` and nowhere else.
 
-### 5. Narration sync
+### 5. Audio
+
+```bash
+python scripts/mux_audio.py videos/Video.mp4 --cues narration_cues.json
+python scripts/verify_audio.py videos/Video_narrated.mp4 --cues narration_cues.json
+```
+
+All six must pass:
+
+| # | Check | Fails when |
+|---|---|---|
+| 1 | audio stream present | missing, or length differs from the picture by >0.5s |
+| 2 | loudness / true peak | outside −18…−14 LUFS, or above −1.0 dBTP |
+| 3 | line overlap / overrun | two lines share seconds, or one runs past the end |
+| 4 | speech present at each cue | the mix is silent where a line was cued |
+| 5 | narration coverage | below 40% (dead air) or above 88% (no room to look) |
+| 6 | longest wordless stretch | more than 14s with nothing said |
+
+Check [4] is the one to trust: everything upstream can be internally
+consistent and still point at the wrong seconds. Then **listen to it**, at
+least to the section boundaries and the payoff — no check can hear a
+mispronounced term or a line that lands flat.
+
+### 6. Narration sync
 
 For each section, compute `words / duration`:
 
@@ -147,7 +194,7 @@ For each section, compute `words / duration`:
 - **< 2.2 w/s** — drags, unless it is the opening or the payoff.
 - Target overall ≈ 2.6 w/s.
 
-### 6. Re-read the defect list
+### 7. Re-read the defect list
 
 If this is a rebuild, walk the original defect list item by item and record
 fixed / n/a / still-present for each. Do not mark an item fixed without the

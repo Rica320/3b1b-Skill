@@ -115,9 +115,17 @@ class Caption:
     ANTI-PATTERN #4: writing a new caption while fading the old one out at
     the same position draws two sentences on top of each other.
 
-    Pass `narration` (the actual spoken line) to hold for as long as it takes
-    to say. That makes holds vary with content - a uniform wait after every
-    beat drags on easy frames and rushes hard ones.
+    Pass `narration` to hold for as long as the line takes to say:
+
+      - with a `narrator=` attached, it is a **beat id** from script.yaml and
+        the hold is the measured length of the synthesised wav, so the caption
+        is on screen for exactly as long as the voice is talking. The cue time
+        is recorded for mux_audio.py.
+      - with no narrator it is the spoken line as prose, and the hold is a
+        word-count estimate. Use this only for a silent render.
+
+    Either way the holds vary with content - a uniform wait after every beat
+    drags on easy frames and rushes hard ones.
 
     ANTI-PATTERN #13: in a 3D scene a caption that is not fixed in frame is a
     flat sheet of glyphs lying in the world's xy-plane - the camera tilt skews
@@ -125,14 +133,23 @@ class Caption:
     inside a ThreeDScene, which is what you almost always want.
     """
 
-    def __init__(self, scene, y=CAPTION_Y, fixed=None):
+    def __init__(self, scene, y=CAPTION_Y, fixed=None, narrator=None):
         self.scene = scene
         self.y = y
         self.fixed = isinstance(scene, ThreeDScene) if fixed is None else fixed
+        self.narrator = narrator
         self.current = None
 
     def show(self, text, narration=None, size=30, color=WHITE,
-             run_time=1.0, morph_from_prev=False):
+             run_time=1.0, morph_from_prev=False, tail=None, hold=True):
+        # The cue has to be taken BEFORE the caption is written, not after:
+        # the voice starts as the words appear, so the line's clock starts at
+        # the first frame of the Write, not at the end of it. Cueing after
+        # would put every line ~1.3s late and the drift compounds.
+        dur = None
+        if narration and self.narrator is not None:
+            dur = self.narrator.cue(self.scene, narration)
+
         new = Text(text, font=FONT, font_size=size).set_color(color)
         new.move_to(np.array([0, self.y, 0]))
         if self.fixed:
@@ -149,7 +166,16 @@ class Caption:
             self.scene.play(Write(new), run_time=run_time)
             spent += 0.35
         self.current = new
-        if narration:
+
+        if dur is not None:
+            # hold=False cues the line and writes the caption but does NOT
+            # wait it out: the caller has visuals to play under the rest of
+            # the line, and calls narrator.finish() when they are done. Waiting
+            # here first would push those visuals past the end of the line.
+            if hold:
+                t = self.narrator.tail if tail is None else tail
+                self.scene.wait(max(0.0, dur + t - spent))
+        elif narration and hold:
             self.scene.wait(
                 max(0.3, speak_time(narration) * NARRATION_COVERAGE - spent))
         return new

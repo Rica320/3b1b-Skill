@@ -1,9 +1,16 @@
 # ── Render output ────────────────────────────────────────────────────────
-# ManimGL writes videos/ and images/ next to the scene file; render_meta.json
-# and _field_cache/ are regenerated on every run.
+# ManimGL writes videos/ and images/ next to the scene file; render_meta.json,
+# narration_cues.json and _field_cache/ are regenerated on every run.
+#
+# The per-beat narration wavs in examples/rubiks/audio/ ARE tracked, unlike
+# the other generated assets: they are only 12MB, and without them the scene
+# cannot be rendered at all (it paces itself to their measured durations), so
+# ignoring them would make the example need a 353MB model download before it
+# would run at all.
 images/
 _field_cache/
 render_meta.json
+narration_cues.json
 partial_movie_file_list.txt
 
 # ── Generated assets ─────────────────────────────────────────────────────

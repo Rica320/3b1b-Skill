@@ -1,0 +1,258 @@
+{
+  "engine": "kokoro",
+  "voice": "am_michael",
+  "speed": 0.92,
+  "reference": null,
+  "sample_rate": 24000,
+  "total_duration": 260.27,
+  "beats": {
+    "s0.open": {
+      "file": "s0.open.wav",
+      "duration": 4.28,
+      "words": 13,
+      "wps": 3.04,
+      "hash": "702e407383f362a4",
+      "text": "This is a solved Rubik's cube. [[0.35]] Watch what twenty turns do to it."
+    },
+    "s0.count": {
+      "file": "s0.count.wav",
+      "duration": 11.05,
+      "words": 33,
+      "wps": 2.99,
+      "hash": "3c5ec5dfce1411ba",
+      "text": "There are forty-three quintillion arrangements it could now be in. [[0.4]] Check one of them every second and you would need about a hundred times the age of the universe to see them all."
+    },
+    "s0.question": {
+      "file": "s0.question.wav",
+      "duration": 9.33,
+      "words": 24,
+      "wps": 2.57,
+      "hash": "8fc775a1603be125",
+      "text": "So nobody is memorising a way out of each position. [[0.5]] Which leaves a real question: what does somebody who can solve this actually know?"
+    },
+    "s1.obvious": {
+      "file": "s1.obvious.wav",
+      "duration": 6.94,
+      "words": 21,
+      "wps": 3.03,
+      "hash": "c9b93d8e539b9ed5",
+      "text": "The obvious answer is that you learn where every piece belongs, and you put it there. One piece at a time."
+    },
+    "s1.place": {
+      "file": "s1.place.wav",
+      "duration": 6.45,
+      "words": 20,
+      "wps": 3.1,
+      "hash": "249b1f3f72e398f7",
+      "text": "Here is a white edge. It belongs on the bottom, on the orange side. One turn, and it is home."
+    },
+    "s1.next": {
+      "file": "s1.next.wav",
+      "duration": 4.33,
+      "words": 15,
+      "wps": 3.46,
+      "hash": "b142e726162f25a8",
+      "text": "Now the next white edge. It is up here, and it belongs at the back."
+    },
+    "s1.break": {
+      "file": "s1.break.wav",
+      "duration": 6.57,
+      "words": 21,
+      "wps": 3.2,
+      "hash": "049c8b9ec8f3b1f2",
+      "text": "To bring it down you have to turn that same right-hand face. [[0.3]] Keep your eye on the piece you just finished."
+    },
+    "s1.lesson": {
+      "file": "s1.lesson.wav",
+      "duration": 15.02,
+      "words": 44,
+      "wps": 2.93,
+      "hash": "1fdecb077883bc36",
+      "text": "Every turn moves nine little cubes at once. On this object there is no such thing as fixing one thing and leaving the rest alone. That is the entire difficulty, and it is why a Rubik's cube is hard and a jigsaw is not."
+    },
+    "s1.rewind": {
+      "file": "s1.rewind.wav",
+      "duration": 10.12,
+      "words": 23,
+      "wps": 2.27,
+      "hash": "8ad28a5b7e182004",
+      "text": "There is exactly one method that always works. Retrace every move, backwards. [[0.4]] Watch it come apart in reverse, and land, exactly, on solved."
+    },
+    "s1.useless": {
+      "file": "s1.useless.wav",
+      "duration": 6.24,
+      "words": 17,
+      "wps": 2.72,
+      "hash": "dd1e16a79cfa10c0",
+      "text": "Perfectly correct, and completely useless. You would have had to stand there and watch the scramble happen."
+    },
+    "s2.idea": {
+      "file": "s2.idea.wav",
+      "duration": 10.9,
+      "words": 31,
+      "wps": 2.84,
+      "hash": "1334fbf61e945280",
+      "text": "But look at why that worked. A move and the undo of that move cancel each other exactly. [[0.4]] Keep the cancelling. Throw away the part where you have to remember everything."
+    },
+    "s2.out": {
+      "file": "s2.out.wav",
+      "duration": 6.62,
+      "words": 21,
+      "wps": 3.17,
+      "hash": "b1375759e08e7f82",
+      "text": "Turn the right face. Call it R. Eight pieces move, and this corner here is now up in the top layer."
+    },
+    "s2.errand": {
+      "file": "s2.errand.wav",
+      "duration": 6.16,
+      "words": 20,
+      "wps": 3.25,
+      "hash": "f069fcba04e327e1",
+      "text": "The corner is out of the way, so now turn the top. The bottom layer cannot feel this at all."
+    },
+    "s2.back": {
+      "file": "s2.back.wav",
+      "duration": 7.74,
+      "words": 20,
+      "wps": 2.58,
+      "hash": "eb84be4f9b898da8",
+      "text": "And now undo the first turn. [[0.3]] R backwards. Every piece that R disturbed goes back to exactly where it was."
+    },
+    "s2.damage": {
+      "file": "s2.damage.wav",
+      "duration": 11.72,
+      "words": 33,
+      "wps": 2.82,
+      "hash": "a96375f89c99826a",
+      "text": "Exactly where it was, except for the two that were away when the top turned. Out of everything on this cube, one corner and one edge have changed, and the rest is untouched."
+    },
+    "s2.name": {
+      "file": "s2.name.wav",
+      "duration": 10.81,
+      "words": 35,
+      "wps": 3.24,
+      "hash": "bb21614c126c55b0",
+      "text": "Out, do something, back. That is a detour. You leave by a road and you come home by the same road, and the only thing that is different is what happened while you were gone."
+    },
+    "s2.four": {
+      "file": "s2.four.wav",
+      "duration": 8.23,
+      "words": 25,
+      "wps": 3.04,
+      "hash": "83ee30c0197bab0c",
+      "text": "One more turn of the top to tidy up, and you have four moves. This little sequence is most of what solving a cube is."
+    },
+    "s3.claim": {
+      "file": "s3.claim.wav",
+      "duration": 9.75,
+      "words": 28,
+      "wps": 2.87,
+      "hash": "db394a5114084eb5",
+      "text": "And here is the strange gift buried in that. If a sequence puts back everything it disturbs, then doing it over and over has to bring you home."
+    },
+    "s3.run": {
+      "file": "s3.run.wav",
+      "duration": 3.2,
+      "words": 7,
+      "wps": 2.19,
+      "hash": "48f4cc92f48e594a",
+      "text": "The same four moves. Again. [[0.3]] And again."
+    },
+    "s3.solved": {
+      "file": "s3.solved.wav",
+      "duration": 12.12,
+      "words": 31,
+      "wps": 2.56,
+      "hash": "c5ed2e1d8b5878dc",
+      "text": "Six times through. Twenty-four moves. And the cube is not close to how it started, it is exactly how it started. Nothing was aimed. It simply had nowhere else to go."
+    },
+    "s4.plan": {
+      "file": "s4.plan.wav",
+      "duration": 14.37,
+      "words": 41,
+      "wps": 2.85,
+      "hash": "03bbc1d3dc71dfbe",
+      "text": "So here is the whole method. Build the bottom layer by hand, where you can still see what you are doing. Then never touch it again. Everything above it gets solved with detours that put the bottom layer back every time."
+    },
+    "s4.cross": {
+      "file": "s4.cross.wav",
+      "duration": 7.11,
+      "words": 22,
+      "wps": 3.09,
+      "hash": "e79281e6f6109e55",
+      "text": "First the white cross. There is no sequence for this one. You just look at it, and turn the four edges down."
+    },
+    "s4.corners": {
+      "file": "s4.corners.wav",
+      "duration": 12.86,
+      "words": 33,
+      "wps": 2.57,
+      "hash": "cb5c5d2df14386d9",
+      "text": "Then the four white corners, and this is the detour you already have. Put a corner above its slot and run those four moves until it drops in. Sometimes once, sometimes five times."
+    },
+    "s4.middle": {
+      "file": "s4.middle.wav",
+      "duration": 13.84,
+      "words": 41,
+      "wps": 2.96,
+      "hash": "046ba98bcab6ad95",
+      "text": "The middle layer takes a longer detour, eight moves, that walks an edge out of the top and into the side of the cube. There is a left-handed version and a right-handed one. They are the same sequence in a mirror."
+    },
+    "s4.yellowcross": {
+      "file": "s4.yellowcross.wav",
+      "duration": 4.24,
+      "words": 11,
+      "wps": 2.59,
+      "hash": "c6620e0f5f574e10",
+      "text": "Now the top. One sequence turns the yellow edges face up."
+    },
+    "s4.yellowface": {
+      "file": "s4.yellowface.wav",
+      "duration": 4.43,
+      "words": 9,
+      "wps": 2.03,
+      "hash": "20ec6b34a73c1b04",
+      "text": "A second twists the corners without disturbing anything underneath."
+    },
+    "s4.place": {
+      "file": "s4.place.wav",
+      "duration": 10.14,
+      "words": 33,
+      "wps": 3.25,
+      "hash": "5449baf433790715",
+      "text": "And two more shuffle the last pieces into place. Every one of them is a detour, so every one of them hands the rest of the cube back exactly as it found it."
+    },
+    "s5.count": {
+      "file": "s5.count.wav",
+      "duration": 9.95,
+      "words": 24,
+      "wps": 2.41,
+      "hash": "f6256c024dc8be66",
+      "text": "Ninety-nine moves, from that scramble to this. Seven different sequences, two of which are the same one mirrored, and the longest is eleven moves."
+    },
+    "s5.restate": {
+      "file": "s5.restate.wav",
+      "duration": 3.36,
+      "words": 10,
+      "wps": 2.98,
+      "hash": "8ea325cb52da1b80",
+      "text": "So: what does somebody who can solve this actually know?"
+    },
+    "s5.answer": {
+      "file": "s5.answer.wav",
+      "duration": 7.35,
+      "words": 20,
+      "wps": 2.72,
+      "hash": "ff30bfae302667b8",
+      "text": "Not positions. [[0.45]] Detours. A short list of paths that leave and come back, and an order to spend them in."
+    },
+    "s5.close": {
+      "file": "s5.close.wav",
+      "duration": 5.04,
+      "words": 8,
+      "wps": 1.59,
+      "hash": "49bcb169c587dfb0",
+      "text": "Forty-three quintillion arrangements. [[0.4]] Seven short sequences to remember."
+    }
+  }
+}

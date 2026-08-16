@@ -61,5 +61,38 @@ fi
 # --- Font cache ----------------------------------------------------------
 fc-cache -f >/dev/null 2>&1 || true
 
+# --- Narration (opt in with --tts) ---------------------------------------
+# Kokoro is the default TTS engine: Apache-2.0, runs locally at about 5x
+# realtime on CPU, no API key. The model files are 325MB + 28MB and are NOT
+# bundled with the skill; they live in ~/.cache/kokoro and are fetched once.
+# The other engines (ElevenLabs, Chatterbox, OpenAI) are installed on demand
+# and are not pulled in here -- Chatterbox alone brings ~2.5GB of torch.
+if [ "${1:-}" = "--tts" ]; then
+  echo "Installing the narration toolchain..."
+  pip install kokoro-onnx soundfile pyyaml --break-system-packages 2>/dev/null \
+    || pip install kokoro-onnx soundfile pyyaml
+
+  KOKORO_DIR="${KOKORO_DIR:-$HOME/.cache/kokoro}"
+  mkdir -p "$KOKORO_DIR"
+  BASE="https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
+  for f in kokoro-v1.0.onnx voices-v1.0.bin; do
+    if [ -s "$KOKORO_DIR/$f" ]; then
+      echo "  $f already present."
+    else
+      echo "  fetching $f ..."
+      curl -fsSL -o "$KOKORO_DIR/$f" "$BASE/$f"
+    fi
+  done
+
+  # ffmpeg does every join, mix and measurement in the audio pipeline.
+  command -v ffmpeg >/dev/null 2>&1 || {
+    echo "  installing ffmpeg..."
+    (apt-get install -y ffmpeg >/dev/null 2>&1 || brew install ffmpeg) || \
+      echo "  WARNING: install ffmpeg by hand; tts/mux/verify all need it."
+  }
+  echo "Narration toolchain ready. Voices: python -c \"from kokoro_onnx import Kokoro\""
+fi
+
 echo "== Setup complete. Verify with: =="
 echo "  xvfb-run -a manimgl example_scenes.py OpeningManimExample -w -o"
+echo "Narration (optional):  bash scripts/setup_env.sh --tts"
