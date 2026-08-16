@@ -37,6 +37,7 @@ This is what actually makes output look like 3Blue1Brown rather than "generic Ma
 | "Remove without ceremony" | `FadeOut(mobj)` |
 | "Look here" | `Indicate(mobj)`, `Flash(point)`, `FlashAround(mobj)` (not `Circumscribe` — that's Community Edition only; ManimGL has no `Circumscribe` class) |
 | "The camera should move/zoom to follow this" | `self.play(self.camera.frame.animate.move_to(...))` (moving-camera scenes) |
+| "The flat picture was hiding something" | tilt the camera out of top-down: `self.play(self.camera.frame.animate.reorient(-30, 68))` — see `three_d.md` |
 | "This equation rearranges into that one" | Build both `Tex(...)` mobjects with matching substrings, then `TransformMatchingTex(eq1, eq2)` |
 
 ## Pacing

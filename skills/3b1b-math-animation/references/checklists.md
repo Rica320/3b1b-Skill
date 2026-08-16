@@ -46,6 +46,24 @@ Run before spending time on a full-quality render.
 - [ ] No dead code.
 - [ ] `dump_meta(self, "render_meta.json")` at the end of `construct`.
 
+### 3D (skip if the camera never leaves `phi = 0`)
+- [ ] The scene needs depth: name the claim that a flat picture cannot make.
+- [ ] The scene subclasses `ThreeDScene`, not `Scene`.
+- [ ] Every caption, title and legend goes through `fix()` — grep for `Text(`
+      and `Tex(` and confirm each one is either fixed or deliberately in world
+      space.
+- [ ] No flat 2D mobject stacked on a filled one without `flat()`.
+- [ ] Dots in space are `dot3d()`/`TrueDot`, not `Dot`.
+- [ ] Curves and markers drawn on a surface are lifted clear of it
+      (`slice_curve` does this; `lift=0.05` by default).
+- [ ] Surfaces have a mesh and non-zero shading; opacity ≈ 0.85.
+- [ ] `f(x, y)` over the domain corners fits inside the axes' `z_range`.
+- [ ] Camera moves use `orbit()`/`spin()` so they land in `render_meta.json`;
+      ambient rotation is under ~10°/s.
+- [ ] `assert_in_frame_3d(self, ...)` — not `assert_in_frame` — and called at
+      the orientation each label is meant to be read at.
+- [ ] Nothing on stage changes during the `phi` reveal.
+
 ### Draft
 - [ ] A low-quality draft (`-l`) renders end to end without exceptions.
 - [ ] Contact sheets reviewed (see command below), not just a few frames.
@@ -75,7 +93,9 @@ All five must pass:
 Camera push-ins legitimately crop and produce large deltas, so declare them:
 `push_in()`/`pull_back()` record windows into `render_meta.json` and the checker
 skips 1 and 4 inside them. This keeps the checks strict everywhere else instead
-of loosening thresholds globally.
+of loosening thresholds globally. The same applies to 3D camera moves —
+`orbit()` and `spin()` record their own windows; confirm the count printed by
+the checker matches the number of moves in the scene before reading the result.
 
 ### 2. Text-overlap audit
 
@@ -113,6 +133,11 @@ ffmpeg -i out.mp4 -vf "fps=1/4,scale=636:358,pad=640:362:2:2:color=0x444444,tile
 Review every sheet. Automated checks cannot judge composition: crowding, dead
 space, a label sitting awkwardly close to an edge, or a field so opaque it hides
 the data. Several such issues in the GANs rebuild were found only this way.
+
+For a 3D scene, sample **across the whole rotation** — a label that is clear at
+the start of an orbit can be sitting on top of the geometry halfway through, and
+a surface that reads as a saddle from one angle reads as a plain bowl from
+another. Both were caught this way in `examples/saddle/` and nowhere else.
 
 ### 5. Narration sync
 

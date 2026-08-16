@@ -5,7 +5,10 @@ confirmed in the pixels, and has a verified fix. When writing scene code, check
 against this list before rendering — most of these are invisible in the source
 and only appear on screen.
 
-Ordered by how much damage they cause.
+#1–#12 are ordered by how much damage they cause. #13–#17 are the 3D-specific
+ones; they only apply to scenes with a tilted camera, and every measurement in
+them came from rendering the failing case and counting the pixels. See
+`three_d.md` for the positive version of those rules.
 
 ---
 
@@ -308,6 +311,141 @@ section** — never scale every hold in the video uniformly.
 `scene04` defined a `boundary(t)` function that was never called. Harmless at
 runtime, but it signals that the scene was edited without being re-read, and it
 misleads the next person. Delete it.
+
+---
+
+## #13 — Flat 2D mobjects used inside a 3D scene
+
+**Damage: captions render at a 70° slant and half-buried in the geometry; dots
+render as ellipses.**
+
+A `Text` that is not fixed in frame is a sheet of glyphs lying in the world's
+xy-plane, and a `Dot` is a flat disc in that same plane. Rendered at the default
+`ThreeDScene` viewpoint:
+
+| | Result |
+|---|---|
+| unfixed caption | skewed and occluded by the surface — measured unreadable |
+| `Dot` | ellipse, **19×6 px, aspect 3.2** (it is `cos(phi)` squashed) |
+| `TrueDot` | circular at every depth: 24, 20, 18 px across at three distances |
+
+```python
+# WRONG
+cap = Text("...").move_to(UP * 3.4)
+d = Dot(axes.c2p(0, 0, 0)).set_color(YELLOW)
+
+# RIGHT
+cap = fix(Text("...").move_to(np.array([0, 3.42, 0])))   # fix_in_frame + no depth test
+d = dot3d(axes.c2p(0, 0, 0.08), YELLOW)                  # TrueDot, lifted clear
+```
+
+`Caption(scene)` fixes itself automatically inside a `ThreeDScene`.
+
+---
+
+## #14 — `fix_in_frame()` after `self.add()`, and flat fills that swallow layers
+
+**Damage: a caption rendered with its first four characters missing.**
+
+`ThreeDScene.add()` switches depth testing on for everything it adds. Fixing a
+mobject in frame afterwards pins it to the screen but leaves the depth test on,
+so the surface in front of it still wins:
+
+| | Rendered |
+|---|---|
+| `fix_in_frame()` **before** `add()` | full text, 3723 px |
+| `fix_in_frame()` **after** `add()` | 989 px — the left half eaten by the surface |
+| after `add()`, plus `deactivate_depth_test()` | full text |
+
+The general form of this is worse than it sounds. Under depth testing, an opaque
+VMobject fill hides anything drawn over it **regardless of distance**:
+
+```python
+rect = Rectangle(...).set_fill(BLUE_E, 1)
+lbl = Text("label").move_to(rect).shift(OUT * 1.0)   # 1.0 units toward camera
+self.add(rect, lbl)                                  # -> zero pixels of label
+```
+
+Measured: text nudged 0.1 and 0.5 toward the camera — invisible. A filled circle
+nudged **1.0** — invisible, in both draw orders. The same label over an
+*unfilled* rectangle renders fine. Nudging is not a fix; turning the depth test
+off for the top layer is:
+
+```python
+lbl = flat(Text("label").move_to(rect))      # deactivate_depth_test()
+# or, for anything that belongs to the HUD rather than the world:
+lbl = fix(Text("label"))
+```
+
+---
+
+## #15 — `assert_in_frame()` on a scene whose camera is tilted
+
+**Damage: a false pass. The guard reports nothing while a label sits off the
+edge.**
+
+`assert_in_frame()` compares **world** coordinates against the frame rectangle.
+Once the camera has been reoriented, world coordinates and screen position are
+unrelated: a label at world x = 6.5 can be dead centre on screen, and a label at
+the world origin can be outside the frame.
+
+```python
+# WRONG in 3D
+assert_in_frame(label=lbl)
+
+# RIGHT - projects through the view matrix and the perspective divide
+assert_in_frame_3d(self, label=lbl)
+```
+
+The projection was checked against rendered pixels: four probe points landed
+within 1 px of prediction. Call it **at the orientation the label is meant to be
+read at** — a label that is perfectly placed at `theta = −30` can be off the
+edge at `theta = +40`, and only the projection at that angle knows.
+
+The same correction applies to `audit_text_overlaps`, which now compares
+projected boxes for anything not fixed in frame.
+
+---
+
+## #16 — Dimming a 3D stage with a VMobject-only helper
+
+**Damage: the surface stays at full brightness while everything else dims.**
+
+A `Surface` is **not** a `VMobject` (verified: `isinstance(surf, VMobject)` is
+`False`), and neither are `TrueDot`, `GlowDot` or `DotCloud`. They have no
+fill/stroke split — one opacity each. Any helper that walks `get_family()`
+looking for `VMobject` leaves them untouched and reports no error.
+
+`Dimmer` handles all of them. Do not reach for `Group.set_opacity()` instead —
+that is ANTI-PATTERN #6, and in 3D it also flattens the surface's shading.
+
+---
+
+## #17 — A curve drawn exactly on the surface it slices
+
+**Damage: one of two slice curves rendered zero pixels for a whole section.**
+
+A slice curve shares every point with the surface, so the two fight for each
+pixel and the curve renders in patches or not at all — and which one wins
+changes with the camera angle, so it can look fine in one still and vanish in
+the next.
+
+```python
+# WRONG - coincident with the surface
+cut = path3d(lambda t: axes.c2p(t, 0, f(t, 0)), (-R, R), BLUE_C)
+
+# RIGHT - lifted clear (slice_curve does this by default, lift=0.05)
+cut = slice_curve(axes, f, (-R, R), direction="x", color=BLUE_C)
+```
+
+Lifting in +z always clears a graph surface, because such a surface has exactly
+one height per (x, y). Markers sitting on a surface need the same treatment.
+
+**Related, same section:** an *undeclared* camera rotation fails
+`verify_render.py` checks [1] and [4] — a rotating frame produces the same pixel
+signature as content falling off the edge and as a hard cut. `orbit()` and
+`spin()` record the window; a hand-written `frame.animate.reorient(...)` does
+not.
 
 ---
 

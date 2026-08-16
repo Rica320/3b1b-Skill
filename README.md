@@ -7,13 +7,16 @@ continuity, semantic colour, a single carried metaphor, narration-paced holds.
 
 The skill is not a list of tips. Its rules were derived by rendering a full
 video, measuring the output frame by frame, cataloguing every defect, and
-rebuilding against the findings. Both videos are in this repository, along with
-the measurements.
+rebuilding against the findings — and the 3D rules the same way, by rendering
+each failing case and counting the pixels. The videos are in this repository,
+along with the measurements.
 
 ```
 skills/3b1b-math-animation/   the skill itself — install this
 examples/gans/                a 6-minute explainer on GANs, plus its audit trail
 examples/harmonic/            a 90-second scene, written from the skill alone
+examples/saddle/              a 95-second 3D scene, where the camera move is
+                              the argument
 ```
 
 ---
@@ -107,17 +110,18 @@ write `videos/Harmonic.mp4`. If it fails, the exact error-to-fix table is in
 
 ## Running the examples
 
-Both examples follow the same three steps. **Run them from their own
+The examples follow the same three steps. **Run them from their own
 directory** — ManimGL reads `custom_config.yml` (pure black background, CMU
 Serif, 1080p) from the current working directory, and rendering from elsewhere
 silently gives you ManimGL's default dark-grey background instead.
 
-| | `examples/gans` | `examples/harmonic` |
-|---|---|---|
-| Runtime | 6:15 | 1:25 |
-| Scene | `GANs` in `gans.py` | `Harmonic` in `harmonic.py` |
-| Needs assets | yes — one prep step | no |
-| Narration script | `SCRIPT.md` | in the module docstring |
+| | `examples/gans` | `examples/harmonic` | `examples/saddle` |
+|---|---|---|---|
+| Runtime | 6:15 | 1:25 | 1:35 |
+| Scene | `GANs` in `gans.py` | `Harmonic` in `harmonic.py` | `Saddle` in `saddle.py` |
+| Needs assets | yes — one prep step | no | no |
+| Narration script | `SCRIPT.md` | in the module docstring | in the module docstring |
+| Dimensions | 2D | 2D | 3D |
 
 ### 1. Prepare assets (GANs example only)
 
@@ -205,6 +209,13 @@ The harmonic example is the control: a scene written from the skill's
 documentation alone, with no other reference, to test whether the written rules
 are sufficient on their own.
 
+The saddle example is the 3D one, and it was built the same way as the GANs
+rebuild: each 3D rule in the skill was derived by rendering the failing version
+first and counting the pixels. A caption fixed in frame *after* being added lost
+its first four characters to the surface; a `Dot` in space rendered as a 19×6
+ellipse; a slice curve lying on the surface it slices was invisible for its whole
+time on screen. All five findings are `anti_patterns.md` #13–#17.
+
 ---
 
 ## Repository layout
@@ -214,15 +225,18 @@ skills/3b1b-math-animation/
 ├── SKILL.md                       entry point and workflow
 ├── references/
 │   ├── narrative_template.md      question → motivation → build → payoff
-│   ├── animation_rules.md         the eight non-negotiables
-│   ├── anti_patterns.md           twelve shipped defects, with fixes
+│   ├── animation_rules.md         the nine non-negotiables
+│   ├── anti_patterns.md           seventeen shipped defects, with fixes
+│   ├── three_d.md                 3D: earning the depth, aiming the camera,
+│   │                              the five depth traps, verifying the render
 │   ├── checklists.md              pre- and post-render gates
 │   ├── style_guide.md             colour system, motion grammar
 │   ├── code_patterns.md           verified ManimGL snippets
 │   └── cli_reference.md           flags, and an error → fix table
 ├── scripts/
 │   ├── manim_helpers.py           safe constructors, Caption, Dimmer,
-│   │                              raster_field, frame assertions
+│   │                              raster_field, frame assertions, and the
+│   │                              3D set: fix/orbit/spin/surface/dot3d
 │   ├── verify_render.py           the five post-render pixel checks
 │   ├── render.sh                  render wrapper (headless on Linux)
 │   └── setup_env.sh               idempotent environment setup (Debian)
@@ -235,8 +249,10 @@ examples/
 │   ├── prepare_assets.py          generates assets/faces/
 │   ├── SCRIPT.md                  narration, timings, colour mapping
 │   └── docs/{DEFECTS,VERIFICATION}.md
-└── harmonic/
-    └── harmonic.py
+├── harmonic/
+│   └── harmonic.py
+└── saddle/
+    └── saddle.py                  the 3D worked example
 ```
 
 The examples import `manim_helpers.py` from `skills/` rather than keeping their

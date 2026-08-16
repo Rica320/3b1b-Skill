@@ -8,12 +8,14 @@ description: >
   an explainer video, a visual proof, a video walking through a formula or
   theorem, or mentions 3Blue1Brown, Grant Sanderson, or "manim" by name —
   even if they don't spell out every detail of what they want animated.
-  Handles: installing and configuring ManimGL for headless rendering
-  (including the xvfb virtual display and LaTeX packages it needs, which
-  are easy to get wrong), writing a narrative spine that builds an argument
-  rather than listing facts, writing Scene code that matches 3b1b's visual
-  language (transform-driven continuity, semantic colour, pure-black
-  background, CMU Serif titles), and verifying the rendered pixels.
+  Covers 3D as well as 2D — surfaces, solids, camera orbits, and 3D
+  presentations where the viewpoint change is the argument. Handles:
+  installing and configuring ManimGL for headless rendering (including the
+  xvfb virtual display and LaTeX packages it needs, which are easy to get
+  wrong), writing a narrative spine that builds an argument rather than
+  listing facts, writing Scene code that matches 3b1b's visual language
+  (transform-driven continuity, semantic colour, pure-black background,
+  CMU Serif titles), and verifying the rendered pixels.
 ---
 
 # 3Blue1Brown-Style Math Animation
@@ -28,7 +30,9 @@ anything that contradicts them from general knowledge of Manim.
 **Scope defaults** (adjust if the user says otherwise): produce a silent render
 with timing paced to spoken narration, so the user can layer their own audio
 afterward. Build the whole video as **one `Scene`** with one method per section —
-not one `Scene` per beat (see below). Deliver a single mp4.
+not one `Scene` per beat (see below). Deliver a single mp4. Default to 2D;
+reach for 3D only where the claim cannot be made without depth, and subclass
+`ThreeDScene` when you do (`references/three_d.md`).
 
 ## The two rules that matter most
 
@@ -41,7 +45,8 @@ not one `Scene` per beat (see below). Deliver a single mp4.
    colour semantics across an entire video. Use the constructors in
    `scripts/manim_helpers.py`.
 
-Both are covered in detail in `references/anti_patterns.md`, along with ten more.
+Both are covered in detail in `references/anti_patterns.md`, along with fifteen
+more — five of which only bite in 3D.
 
 ## Workflow
 
@@ -58,11 +63,20 @@ Both are covered in detail in `references/anti_patterns.md`, along with ten more
    approved** — visuals built on a weak spine cannot be rescued by polish.
 
 3. **Write the scene against the rules.** `references/animation_rules.md` states
-   the eight non-negotiables (transform don't cut; one idea on screen; nothing
+   the nine non-negotiables (transform don't cut; one idea on screen; nothing
    unmotivated; camera over decoration; semantic colour; stagger; vary the holds;
-   never leave the frame). Copy `scripts/manim_helpers.py` next to your scene file
-   and use its helpers — each one exists to prevent a specific shipped defect.
-   Pull working API snippets from `references/code_patterns.md`.
+   never leave the frame; in 3D the camera move is the argument). Copy
+   `scripts/manim_helpers.py` next to your scene file and use its helpers — each
+   one exists to prevent a specific shipped defect. Pull working API snippets
+   from `references/code_patterns.md`.
+
+   **If any part of the video is 3D — a surface, a solid, a camera orbit, a
+   "3D presentation" — read `references/three_d.md` before writing it.** 3D has
+   its own set of failure modes that do not exist in 2D and are invisible in the
+   source: captions that render at a slant and get eaten by the geometry, dots
+   that render as ellipses, curves on a surface that vanish, in-frame assertions
+   that pass while the label is off screen. All measured, all fixable in one
+   line each.
 
 4. **Check `references/anti_patterns.md` before rendering.** Most of these
    defects are invisible in the source and only appear on screen.
@@ -106,9 +120,14 @@ what's here, it's very likely describing the Community Edition — don't apply i
 **Read before writing anything:**
 - `references/narrative_template.md` — question → motivation → build → payoff;
   the carried-metaphor test; script deliverable format; pacing arithmetic
-- `references/animation_rules.md` — the eight rules, each with its helper
-- `references/anti_patterns.md` — twelve shipped defects with verified fixes
+- `references/animation_rules.md` — the nine rules, each with its helper
+- `references/anti_patterns.md` — seventeen shipped defects with verified fixes
 - `references/checklists.md` — pre-render and post-render gates
+
+**Read before writing any 3D:**
+- `references/three_d.md` — when depth earns its place, aiming the camera,
+  fixing the 2D overlay layer, the five depth traps, surfaces, verifying a 3D
+  render
 
 **Reference as needed:**
 - `references/style_guide.md` — visual language, colour system, motion grammar
@@ -118,7 +137,9 @@ what's here, it's very likely describing the Community Edition — don't apply i
 **Code:**
 - `scripts/manim_helpers.py` — safe constructors, `Caption`, `Dimmer`,
   `push_in`/`pull_back`, `equation`/`box_around`, `assert_in_frame`,
-  `audit_text_overlaps`, `raster_field`/`swap_raster`
+  `audit_text_overlaps`, `raster_field`/`swap_raster`; and for 3D, `fix`/`flat`,
+  `orient`/`orbit`/`spin`, `surface`/`mesh_for`/`dot3d`/`path3d`/`slice_curve`,
+  `project`/`assert_in_frame_3d`
 - `scripts/verify_render.py` — five post-render pixel checks
 - `scripts/render.sh` — render wrapper (headless on Linux, direct on macOS)
 - `scripts/setup_env.sh` — idempotent environment setup
@@ -128,4 +149,5 @@ what's here, it's very likely describing the Community Edition — don't apply i
 <https://github.com/Rica320/3b1b-Skill>): `examples/gans/` is a full 6-minute
 build applying every rule here, shipped with the frame-by-frame defect audit of
 the version it replaced and the verification of the rebuild against it.
-`examples/harmonic/` is a shorter one to copy from.
+`examples/harmonic/` is a shorter one to copy from. `examples/saddle/` is the 3D
+one — 1:35, and the camera move is the proof.

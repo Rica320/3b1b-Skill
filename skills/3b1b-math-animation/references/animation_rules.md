@@ -144,5 +144,38 @@ not to the clock.**
 - Check the y-range of any plotted function actually contains the function's
   range over the plotted x-range. v1 clipped a parabola against the top edge for
   9.8 continuous seconds.
+- In a 3D scene use `assert_in_frame_3d(scene, ...)` instead: `assert_in_frame`
+  compares world coordinates, which say nothing about screen position once the
+  camera is tilted (ANTI-PATTERN #15).
 
 **Verify:** check [1] must report zero frames with content in the outer 8px.
+
+---
+
+## Rule 9 — In 3D, the camera move is the argument
+
+**Never render in 3D for the look of it. Add the third dimension only when the
+claim cannot be made without it, and when you do, make the camera move carry
+the claim.**
+
+- State what the scene has to prove, then ask whether a flat picture proves it.
+  If it does, stay flat: depth cues cost contrast, occlusion hides labels, and
+  the viewer spends attention rebuilding geometry instead of following you.
+- The reveal is `phi = 0 → ~68`: open the scene top-down, where the flat view
+  produces a contradiction, then tilt. Nothing else on stage may change during
+  that move — the whole point is that the geometry was always this shape.
+  `orbit(scene, theta=..., phi=..., run_time=3.4)`.
+- Ambient rotation is seasoning. Keep `spin(scene, seconds, speed=...)` under
+  ~10°/s, and choose the direction that keeps the feature you are discussing
+  facing the camera.
+- Every 3D overlay is a HUD: captions, titles and legends go through `fix()`,
+  which pins them to the screen *and* takes them out of the depth test
+  (ANTI-PATTERN #13/#14).
+- A surface without a mesh is a coloured blob until the camera moves. Give it
+  `mesh_for(surf)` and shading, so a still frame still reads as a surface.
+
+**Verify:** every camera move must appear as a window in `render_meta.json` —
+`orbit()` and `spin()` record them, a hand-written `frame.animate.reorient(...)`
+does not, and an undeclared move fails checks [1] and [4].
+
+Full treatment, with the measurements behind each of these: `three_d.md`.

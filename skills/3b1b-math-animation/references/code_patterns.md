@@ -74,6 +74,53 @@ class GraphScene(Scene):
         self.wait()
 ```
 
+## A surface over a coordinate system (3D)
+
+Verified in ManimGL 1.7.2. `ThreeDAxes.get_graph` returns a `ParametricSurface`
+already mapped into the axes' units, so ticks, curves and the surface register
+with each other. Full treatment in `references/three_d.md`.
+
+```python
+class SurfaceScene(ThreeDScene):          # ThreeDScene, not Scene
+    def construct(self):
+        self.camera.frame.reorient(-30, 68, 0, ORIGIN, 8.0)
+
+        axes = ThreeDAxes(
+            x_range=(-3, 3, 1), y_range=(-3, 3, 1), z_range=(-2, 2, 1),
+            width=6, height=6, depth=3,
+        )
+        surf = axes.get_graph(lambda x, y: 0.5 * (x * x - y * y),
+                              color=TEAL_C, opacity=0.85,
+                              resolution=(72, 72))
+        surf.set_shading(0.3, 0.2, 0.5)          # (0,0,0) renders it flat
+        mesh = SurfaceMesh(surf, resolution=(19, 19))
+        mesh.set_stroke(WHITE, width=1.0, opacity=0.5)
+
+        title = Text("z = x^2 - y^2", font="CMU Serif", font_size=32)
+        title.move_to(np.array([0, 3.42, 0]))
+        title.fix_in_frame()                     # screen space, not world
+        title.deactivate_depth_test()            # or the surface eats it
+
+        self.play(ShowCreation(axes))
+        self.play(ShowCreation(surf), ShowCreation(mesh), FadeIn(title))
+        self.wait()
+```
+
+## Animating the viewpoint (3D)
+
+```python
+# the reveal: top-down to oblique, nothing else on stage changing
+self.play(self.camera.frame.animate.reorient(-30, 68), run_time=3.4)
+
+# slow ambient rotation during a wait
+self.camera.frame.add_ambient_rotation(-5 * DEG)   # degrees per second
+self.wait(5.0)
+self.camera.frame.clear_updaters()
+```
+
+`orbit()` and `spin()` in `manim_helpers.py` wrap these and record the camera
+window that `verify_render.py` needs.
+
 ## Interactive iterative development (ManimGL's signature workflow)
 
 ManimGL is built around live-tweaking a scene rather than blind write-render-check cycles. Two ways in:
