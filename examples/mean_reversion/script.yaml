@@ -1,0 +1,213 @@
+# Narration for "When is a gap big enough to bet on?"
+#
+# The only place the spoken words exist. mean_reversion.py refers to these ids
+# and contains no prose, so the voice can be recast without touching a line of
+# animation code.
+#
+#   ../../env/bin/python \
+#     ../../skills/3b1b-math-animation/scripts/tts.py script.yaml --out audio
+#
+# [[0.4]] is an explicit pause of that many seconds, cut in exactly.
+#
+# Every number spoken here is computed in market.py and checked by
+# verify_market.py -- 110 quiet days, 98 of the next 130, six winners for
+# $3.75, 27c and 24c gross becoming 7c and 4c net, $1.58, 30c at sigma 15c,
+# -$9.32 over 89 days, and a z-score that never passes -2.5 while the gap
+# falls eleven dollars.
+
+voice:
+  engine: kokoro
+  name: am_michael
+  speed: 0.92
+
+beats:
+  # ── §0  the question ──────────────────────────────────────────────────
+  - id: s0.open
+    text: >
+      These are two companies in the same industry. [[0.35]] When the market
+      has a good year, they both have a good year. When it falls, they both
+      fall.
+
+  - id: s0.weather
+    text: >
+      So if one of them goes up, you have learned almost nothing. You are
+      looking at the weather.
+
+  - id: s0.gap
+    text: >
+      Look at the distance between them instead. [[0.4]] Most of the year it
+      holds. And then, here, it stretches.
+
+  - id: s0.question
+    text: >
+      Which is the whole question. [[0.5]] When is a gap big enough to bet on?
+
+  # ── §1  the obvious answer, tried and failed ──────────────────────────
+  - id: s1.beta
+    text: >
+      First, make the gap a real number. [[0.35]] Stretch B until it sits on
+      top of A. That is all beta does: it says how many shares of B match one
+      share of A.
+
+  - id: s1.lift
+    text: >
+      What is left over, the part that does not line up, is the gap. [[0.3]]
+      On its own, that is one number a day, for a year.
+
+  - id: s1.obvious
+    text: >
+      Now the obvious rule. Pick a number of dollars, and call anything past
+      it unusual. [[0.4]] Two dollars.
+
+  - id: s1.silent
+    text: >
+      And for a hundred and ten days, it never fires. Not once. The gap never
+      gets that far from home.
+
+  - id: s1.lower
+    text: >
+      Fine. Lower it. [[0.4]] Forty cents.
+
+  - id: s1.shout
+    text: >
+      And now, over the next hundred and thirty days, it fires on ninety-eight
+      of them. [[0.45]] Something that is true almost every day is not telling
+      you anything.
+
+  - id: s1.lesson
+    text: >
+      There is no dollar number that works, because the pair is quiet in one
+      stretch and loud in the other. [[0.4]] Two dollars is a fact about
+      dollars, not about this pair.
+
+  # ── §2  a unit the pair supplies itself ───────────────────────────────
+  - id: s2.need
+    text: >
+      What the threshold is missing is a unit. [[0.4]] And there is only one
+      honest place to get one: the gap's own recent past.
+
+  - id: s2.window
+    text: >
+      Take the last sixty days. Their average is where the gap has been
+      sitting. [[0.3]] How far they scatter around it is how far it usually
+      wanders.
+
+  - id: s2.band
+    text: >
+      Slide that window along, and you get a band. [[0.4]] Watch it breathe.
+      Narrow where the pair is quiet, wide where it is loud.
+
+  - id: s2.ruler
+    text: >
+      So ask the same question in units of the band. [[0.45]] Not how many
+      dollars. How many band-widths.
+
+  - id: s2.rescale
+    text: >
+      Nothing about the gap has changed. We are only measuring it differently.
+      [[0.35]] Straighten the band into rails, and the curve comes with it,
+      now in units of its own noise.
+
+  - id: s2.z
+    text: >
+      That number has a name. The gap, minus its rolling mean, divided by its
+      rolling standard deviation. [[0.4]] The z-score.
+
+  # ── §3  the rule, and what it actually pays ───────────────────────────
+  - id: s3.rule
+    text: >
+      And now the rule is testable. [[0.35]] Outside the rails, bet that the
+      gap closes: sell the expensive one, buy the cheap one. Back at the
+      middle, close.
+
+  - id: s3.market
+    text: >
+      Notice what you are not doing. You are not predicting the market: both
+      legs ride it together, so it cancels.
+
+  - id: s3.six
+    text: >
+      Six times on this stretch of data, it did. [[0.4]] Six trades, six
+      winners, three dollars seventy-five.
+
+  - id: s3.but
+    text: >
+      But look closely at the first two.
+
+  - id: s3.cost
+    text: >
+      The gap came back twenty-seven cents, and then twenty-four. [[0.35]]
+      Getting in and out of both legs costs about twenty. So those trades kept
+      seven cents, and four.
+
+  - id: s3.strip
+    text: >
+      Here is that cost, on the same picture. [[0.3]] A fixed number of
+      dollars. But sigma is not fixed, so in band-widths the cost breathes the
+      other way.
+
+  - id: s3.same
+    text: >
+      Which is why the same signal made four cents in the quiet stretch, and a
+      dollar fifty-eight in the loud one. [[0.4]] Two sigma is worth thirty
+      cents when sigma is fifteen.
+
+  # ── §4  the part of the data we did not look at ───────────────────────
+  - id: s4.fitted
+    text: >
+      Now the uncomfortable part. [[0.4]] Sixty days. Two sigma. Every one of
+      those numbers was chosen by looking at this picture.
+
+  - id: s4.holdout
+    text: >
+      So the only test worth anything is the part of the picture we have not
+      looked at. [[0.45]] Here it is.
+
+  - id: s4.enter
+    text: >
+      The gap goes low. The rule buys. [[0.3]] And then the gap keeps going.
+
+  - id: s4.walk
+    text: >
+      Nine dollars. [[0.3]] Eleven. [[0.4]] And it does not come back. The
+      relationship did not stretch. It ended.
+
+  - id: s4.z
+    text: >
+      And watch the z-score while that happens. [[0.4]] Over the whole
+      collapse it never once passes minus two and a half. On the day the gap
+      is eleven dollars from home, the z-score reads minus one point four.
+
+  - id: s4.why
+    text: >
+      It is not lying. It is answering the question you asked: is today
+      unusual, compared with the last sixty days. [[0.45]] And the last sixty
+      days are falling too. The mean is chasing the gap down.
+
+  - id: s4.tally
+    text: >
+      Six winners. Three dollars seventy-five. [[0.5]] One trade back: nine
+      dollars and thirty-two cents, and eighty-nine days spent holding it,
+      waiting for a mean that had already left.
+
+  # ── §5  payoff ────────────────────────────────────────────────────────
+  - id: s5.restate
+    text: >
+      So. [[0.5]] When is a gap big enough to bet on?
+
+  - id: s5.answer
+    text: >
+      Never in dollars. [[0.45]] Only in sigmas. And only while the sigmas are
+      still measuring something that is there.
+
+  - id: s5.ruler
+    text: >
+      Because what we built was never a prediction. [[0.35]] It was a ruler,
+      made out of the recent past, and then handed the assumption that the
+      recent past still applies.
+
+  - id: s5.close
+    text: >
+      Which is why the real work is not finding the signal. [[0.4]] It is
+      out-of-sample testing, and costs, and position sizing, and drawdowns.
+      Machinery for one question: how much of the edge was ever there.

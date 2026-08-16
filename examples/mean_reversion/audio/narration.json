@@ -1,0 +1,290 @@
+{
+  "engine": "kokoro",
+  "voice": "am_michael",
+  "speed": 0.92,
+  "reference": null,
+  "sample_rate": 24000,
+  "total_duration": 287.11,
+  "beats": {
+    "s0.open": {
+      "file": "s0.open.wav",
+      "duration": 8.55,
+      "words": 27,
+      "wps": 3.16,
+      "hash": "5e23b8aa63e1b672",
+      "text": "These are two companies in the same industry. [[0.35]] When the market has a good year, they both have a good year. When it falls, they both fall."
+    },
+    "s0.weather": {
+      "file": "s0.weather.wav",
+      "duration": 5.17,
+      "words": 18,
+      "wps": 3.48,
+      "hash": "c681450776f2fe6e",
+      "text": "So if one of them goes up, you have learned almost nothing. You are looking at the weather."
+    },
+    "s0.gap": {
+      "file": "s0.gap.wav",
+      "duration": 6.19,
+      "words": 18,
+      "wps": 2.91,
+      "hash": "a56dc064fa64c745",
+      "text": "Look at the distance between them instead. [[0.4]] Most of the year it holds. And then, here, it stretches."
+    },
+    "s0.question": {
+      "file": "s0.question.wav",
+      "duration": 4.23,
+      "words": 14,
+      "wps": 3.31,
+      "hash": "efb9cca760345245",
+      "text": "Which is the whole question. [[0.5]] When is a gap big enough to bet on?"
+    },
+    "s1.beta": {
+      "file": "s1.beta.wav",
+      "duration": 10.06,
+      "words": 33,
+      "wps": 3.28,
+      "hash": "3c8d4ae86026d015",
+      "text": "First, make the gap a real number. [[0.35]] Stretch B until it sits on top of A. That is all beta does: it says how many shares of B match one share of A."
+    },
+    "s1.lift": {
+      "file": "s1.lift.wav",
+      "duration": 7.24,
+      "words": 26,
+      "wps": 3.59,
+      "hash": "25b6381e1f2f1d42",
+      "text": "What is left over, the part that does not line up, is the gap. [[0.3]] On its own, that is one number a day, for a year."
+    },
+    "s1.obvious": {
+      "file": "s1.obvious.wav",
+      "duration": 7.18,
+      "words": 17,
+      "wps": 2.37,
+      "hash": "09c0ae06feb459fb",
+      "text": "Now the obvious rule. Pick a number of dollars, and call anything past it unusual. [[0.4]] Two dollars."
+    },
+    "s1.silent": {
+      "file": "s1.silent.wav",
+      "duration": 6.97,
+      "words": 20,
+      "wps": 2.87,
+      "hash": "48158634f92d93df",
+      "text": "And for a hundred and ten days, it never fires. Not once. The gap never gets that far from home."
+    },
+    "s1.lower": {
+      "file": "s1.lower.wav",
+      "duration": 2.64,
+      "words": 5,
+      "wps": 1.89,
+      "hash": "98a27044934c715e",
+      "text": "Fine. Lower it. [[0.4]] Forty cents."
+    },
+    "s1.shout": {
+      "file": "s1.shout.wav",
+      "duration": 9.75,
+      "words": 27,
+      "wps": 2.77,
+      "hash": "d69b88c702f57f12",
+      "text": "And now, over the next hundred and thirty days, it fires on ninety-eight of them. [[0.45]] Something that is true almost every day is not telling you anything."
+    },
+    "s1.lesson": {
+      "file": "s1.lesson.wav",
+      "duration": 10.37,
+      "words": 31,
+      "wps": 2.99,
+      "hash": "dea856e27bde01ae",
+      "text": "There is no dollar number that works, because the pair is quiet in one stretch and loud in the other. [[0.4]] Two dollars is a fact about dollars, not about this pair."
+    },
+    "s2.need": {
+      "file": "s2.need.wav",
+      "duration": 8.06,
+      "words": 23,
+      "wps": 2.85,
+      "hash": "e08b26fad5a6e463",
+      "text": "What the threshold is missing is a unit. [[0.4]] And there is only one honest place to get one: the gap's own recent past."
+    },
+    "s2.window": {
+      "file": "s2.window.wav",
+      "duration": 9.31,
+      "words": 26,
+      "wps": 2.79,
+      "hash": "d63eee2b7e8edec9",
+      "text": "Take the last sixty days. Their average is where the gap has been sitting. [[0.3]] How far they scatter around it is how far it usually wanders."
+    },
+    "s2.band": {
+      "file": "s2.band.wav",
+      "duration": 7.96,
+      "words": 23,
+      "wps": 2.89,
+      "hash": "e41111db55afb6de",
+      "text": "Slide that window along, and you get a band. [[0.4]] Watch it breathe. Narrow where the pair is quiet, wide where it is loud."
+    },
+    "s2.ruler": {
+      "file": "s2.ruler.wav",
+      "duration": 6.79,
+      "words": 17,
+      "wps": 2.5,
+      "hash": "b4015a4d29351d49",
+      "text": "So ask the same question in units of the band. [[0.45]] Not how many dollars. How many band-widths."
+    },
+    "s2.rescale": {
+      "file": "s2.rescale.wav",
+      "duration": 10.99,
+      "words": 30,
+      "wps": 2.73,
+      "hash": "d8b0463f743f03ad",
+      "text": "Nothing about the gap has changed. We are only measuring it differently. [[0.35]] Straighten the band into rails, and the curve comes with it, now in units of its own noise."
+    },
+    "s2.z": {
+      "file": "s2.z.wav",
+      "duration": 8.71,
+      "words": 19,
+      "wps": 2.18,
+      "hash": "30f75d67665f105e",
+      "text": "That number has a name. The gap, minus its rolling mean, divided by its rolling standard deviation. [[0.4]] The z-score."
+    },
+    "s3.rule": {
+      "file": "s3.rule.wav",
+      "duration": 9.57,
+      "words": 27,
+      "wps": 2.82,
+      "hash": "d6aa7d26f3041b28",
+      "text": "And now the rule is testable. [[0.35]] Outside the rails, bet that the gap closes: sell the expensive one, buy the cheap one. Back at the middle, close."
+    },
+    "s3.market": {
+      "file": "s3.market.wav",
+      "duration": 7.31,
+      "words": 20,
+      "wps": 2.74,
+      "hash": "d9b60e1d1e52f2eb",
+      "text": "Notice what you are not doing. You are not predicting the market: both legs ride it together, so it cancels."
+    },
+    "s3.six": {
+      "file": "s3.six.wav",
+      "duration": 6.99,
+      "words": 16,
+      "wps": 2.29,
+      "hash": "05ae2da64c48bc1b",
+      "text": "Six times on this stretch of data, it did. [[0.4]] Six trades, six winners, three dollars seventy-five."
+    },
+    "s3.but": {
+      "file": "s3.but.wav",
+      "duration": 1.92,
+      "words": 7,
+      "wps": 3.65,
+      "hash": "65988e914fc3ea78",
+      "text": "But look closely at the first two."
+    },
+    "s3.cost": {
+      "file": "s3.cost.wav",
+      "duration": 10.66,
+      "words": 27,
+      "wps": 2.53,
+      "hash": "e0206f37e6057bff",
+      "text": "The gap came back twenty-seven cents, and then twenty-four. [[0.35]] Getting in and out of both legs costs about twenty. So those trades kept seven cents, and four."
+    },
+    "s3.strip": {
+      "file": "s3.strip.wav",
+      "duration": 9.39,
+      "words": 27,
+      "wps": 2.88,
+      "hash": "c0c40ac324b3b2f6",
+      "text": "Here is that cost, on the same picture. [[0.3]] A fixed number of dollars. But sigma is not fixed, so in band-widths the cost breathes the other way."
+    },
+    "s3.same": {
+      "file": "s3.same.wav",
+      "duration": 10.92,
+      "words": 31,
+      "wps": 2.84,
+      "hash": "029229bda7b67251",
+      "text": "Which is why the same signal made four cents in the quiet stretch, and a dollar fifty-eight in the loud one. [[0.4]] Two sigma is worth thirty cents when sigma is fifteen."
+    },
+    "s4.fitted": {
+      "file": "s4.fitted.wav",
+      "duration": 8.43,
+      "words": 20,
+      "wps": 2.37,
+      "hash": "cc7c5b1000fdac64",
+      "text": "Now the uncomfortable part. [[0.4]] Sixty days. Two sigma. Every one of those numbers was chosen by looking at this picture."
+    },
+    "s4.holdout": {
+      "file": "s4.holdout.wav",
+      "duration": 6.48,
+      "words": 20,
+      "wps": 3.09,
+      "hash": "013d71824d42854f",
+      "text": "So the only test worth anything is the part of the picture we have not looked at. [[0.45]] Here it is."
+    },
+    "s4.enter": {
+      "file": "s4.enter.wav",
+      "duration": 4.33,
+      "words": 13,
+      "wps": 3.0,
+      "hash": "8f2dfe454e1b1ff0",
+      "text": "The gap goes low. The rule buys. [[0.3]] And then the gap keeps going."
+    },
+    "s4.walk": {
+      "file": "s4.walk.wav",
+      "duration": 7.12,
+      "words": 16,
+      "wps": 2.25,
+      "hash": "a58a8749c4471b27",
+      "text": "Nine dollars. [[0.3]] Eleven. [[0.4]] And it does not come back. The relationship did not stretch. It ended."
+    },
+    "s4.z": {
+      "file": "s4.z.wav",
+      "duration": 13.66,
+      "words": 37,
+      "wps": 2.71,
+      "hash": "29f84db57e96d773",
+      "text": "And watch the z-score while that happens. [[0.4]] Over the whole collapse it never once passes minus two and a half. On the day the gap is eleven dollars from home, the z-score reads minus one point four."
+    },
+    "s4.why": {
+      "file": "s4.why.wav",
+      "duration": 13.18,
+      "words": 35,
+      "wps": 2.66,
+      "hash": "3a2e59eaad430138",
+      "text": "It is not lying. It is answering the question you asked: is today unusual, compared with the last sixty days. [[0.45]] And the last sixty days are falling too. The mean is chasing the gap down."
+    },
+    "s4.tally": {
+      "file": "s4.tally.wav",
+      "duration": 12.29,
+      "words": 27,
+      "wps": 2.2,
+      "hash": "49cdb30d374fc05f",
+      "text": "Six winners. Three dollars seventy-five. [[0.5]] One trade back: nine dollars and thirty-two cents, and eighty-nine days spent holding it, waiting for a mean that had already left."
+    },
+    "s5.restate": {
+      "file": "s5.restate.wav",
+      "duration": 3.26,
+      "words": 10,
+      "wps": 3.07,
+      "hash": "1e7e4a628e71c9e5",
+      "text": "So. [[0.5]] When is a gap big enough to bet on?"
+    },
+    "s5.answer": {
+      "file": "s5.answer.wav",
+      "duration": 7.1,
+      "words": 18,
+      "wps": 2.54,
+      "hash": "aacfb2026d67b462",
+      "text": "Never in dollars. [[0.45]] Only in sigmas. And only while the sigmas are still measuring something that is there."
+    },
+    "s5.ruler": {
+      "file": "s5.ruler.wav",
+      "duration": 10.44,
+      "words": 29,
+      "wps": 2.78,
+      "hash": "7da1c4160f1fe231",
+      "text": "Because what we built was never a prediction. [[0.35]] It was a ruler, made out of the recent past, and then handed the assumption that the recent past still applies."
+    },
+    "s5.close": {
+      "file": "s5.close.wav",
+      "duration": 13.89,
+      "words": 34,
+      "wps": 2.45,
+      "hash": "e2a843b55a64c4c6",
+      "text": "Which is why the real work is not finding the signal. [[0.4]] It is out-of-sample testing, and costs, and position sizing, and drawdowns. Machinery for one question: how much of the edge was ever there."
+    }
+  }
+}
