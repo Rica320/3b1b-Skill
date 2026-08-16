@@ -14,7 +14,7 @@ examples/gans/assets/faces/
 # ── Python ───────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
-*$py.class
+*$py.class\
 *.so
 build/
 dist/
