@@ -1,0 +1,248 @@
+# Narration for "The same chart, two opposite bets. What decides which one is right?"
+#
+# The only place the spoken words exist. momentum.py refers to these ids and
+# contains no prose, so the voice can be recast without touching a line of
+# animation code.
+#
+#   ../../env/bin/python \
+#     ../../skills/3b1b-math-animation/scripts/tts.py script.yaml --out audio
+#
+# [[0.4]] is an explicit pause of that many seconds, cut in exactly.
+#
+# Every number spoken here is computed in panel.py and checked by
+# verify_panel.py -- +1.09 at six months, -0.55 at one, -0.10 at four years,
+# +1.09 held one month against +0.06 held two years, 1152 backtests, a peak of
+# +1.22 at k=6 h=2, two low points of -0.55 at opposite corners, 90% of the
+# book replaced every month, and -0.92 after ten basis points a trade.
+
+voice:
+  engine: kokoro
+  name: am_michael
+  speed: 0.92
+
+beats:
+  # ── §0  the question ──────────────────────────────────────────────────
+  - id: s0.chart
+    text: >
+      Here is a stock that has gone up a long way over the past six months.
+      [[0.35]] Nothing unusual about that. There are always some.
+
+  - id: s0.two
+    text: >
+      Two people look at exactly this chart and say opposite things.
+      [[0.45]] It has run too far, it will come back. [[0.4]] It is moving,
+      it will keep moving.
+
+  - id: s0.real
+    text: >
+      These are not moods. They are both real strategies with real money
+      behind them, and each one has years where it is the only thing working.
+
+  - id: s0.question
+    text: >
+      So. [[0.5]] The same chart, two opposite bets. What decides which one is
+      right?
+
+  # ── §1  stop arguing, measure ─────────────────────────────────────────
+  - id: s1.measure
+    text: >
+      The honest way to settle that is to stop arguing and measure it. [[0.35]]
+      One chart proves nothing, so take the whole market.
+
+  - id: s1.cross
+    text: >
+      Two hundred and forty stocks, two hundred and fifty years. [[0.35]]
+      This is a simulated market, and later that will matter twice.
+
+  - id: s1.signal
+    text: >
+      For each stock, one number. What it did over the last six months.
+      [[0.3]] Today's price, over the price six months ago, minus one.
+
+  - id: s1.rank
+    text: >
+      Now sort the entire market by that number. [[0.45]] Buy the strongest
+      tenth. Short the weakest tenth.
+
+  - id: s1.rule
+    text: >
+      Wait a while, and then do it again. [[0.4]] That is the whole rule.
+      There is nothing else in it.
+
+  - id: s1.result
+    text: >
+      And over two hundred and fifty years of this market, it makes one point
+      zero nine percent a month. [[0.5]] Momentum wins.
+
+  - id: s1.change
+    text: >
+      Except. [[0.45]] Change one number. Not the market. Not the rule.
+      [[0.35]] The six.
+
+  - id: s1.one
+    text: >
+      Rank on the last month instead of the last six months. Same code, same
+      market, same day. [[0.4]] Minus zero point five five.
+
+  - id: s1.four
+    text: >
+      Rank on the last four years. [[0.45]] Minus zero point one zero.
+
+  - id: s1.lesson
+    text: >
+      So, does momentum work, was never a question about the market. [[0.4]]
+      It is a question about a number we picked without thinking.
+
+  # ── §2  a strategy is a point, not a rule ─────────────────────────────
+  - id: s2.second
+    text: >
+      And there is a second number hidden in, do it again. [[0.4]] How long
+      do you hold, before you re-sort?
+
+  - id: s2.hold
+    text: >
+      Hold that same six-month signal for one month and it pays one point zero
+      nine. Hold it two years and it pays six hundredths. [[0.35]] Same signal.
+
+  - id: s2.pair
+    text: >
+      So a strategy is not a rule. [[0.45]] It is a pair of numbers. And every
+      pair is a different strategy.
+
+  - id: s2.floor
+    text: >
+      Lookback along one axis, holding period along the other. [[0.3]] Each
+      step doubles the months.
+
+  - id: s2.dot
+    text: >
+      And everything we just built, all of it, [[0.35]] is one dot on this
+      floor.
+
+  - id: s2.all
+    text: >
+      So run all of them. [[0.4]] Forty-eight lookbacks, by twenty-four holding
+      periods. Eleven hundred and fifty-two complete backtests.
+
+  - id: s2.height
+    text: >
+      Every one of them has a number attached. What it paid. [[0.45]] Give each
+      dot that number, as its height.
+
+  - id: s2.nothing
+    text: >
+      [[0.4]] Nothing happened. [[0.7]] Every dot just moved, and from straight
+      above you cannot see any of it. [[0.4]] Height is the one direction this
+      view does not have.
+
+  # ── §3  the tilt ──────────────────────────────────────────────────────
+  - id: s3.move
+    text: >
+      So move.
+
+  - id: s3.landscape
+    text: >
+      They were all sitting at their own heights the whole time. [[0.5]] It is
+      a landscape.
+
+  - id: s3.ridge
+    text: >
+      Up here, ranking on three months to a year and holding for a month or
+      three, the ground is orange. Buying winners pays. [[0.4]] The peak is one
+      point two two percent a month.
+
+  - id: s3.corner
+    text: >
+      In the far corner, ranking on four years and holding for two, the ground
+      is blue, and the same rule loses half a percent a month. [[0.45]] That is
+      not a different market, or even a different theory. It is mean reversion,
+      on the same map.
+
+  - id: s3.tie
+    text: >
+      And here is the part I did not expect. [[0.45]] The two lowest points on
+      this map are minus zero point five five, [[0.3]] and minus zero point five
+      five. [[0.5]] Opposite corners.
+
+  # ── §4  why the map has that shape ────────────────────────────────────
+  - id: s4.shape
+    text: >
+      That shape is not a coincidence, because I know exactly what went into
+      this market. [[0.4]] Three things, and each owns a feature of the map.
+
+  - id: s4.bounce
+    text: >
+      One. Every price carries an error that is in today's number and gone from
+      tomorrow's. [[0.35]] Rank on a single month and that noise is most of what
+      you are ranking on. [[0.4]] That is the notch.
+
+  - id: s4.diffusion
+    text: >
+      Two. News is priced in slowly, over sixteen months here. [[0.4]] So a
+      stock that moved on news last quarter is still moving on it now. [[0.35]]
+      That is the ridge.
+
+  - id: s4.overshoot
+    text: >
+      Three. The move overshoots, and the overshoot is handed back over years.
+      [[0.45]] That is the basin.
+
+  - id: s4.slice
+    text: >
+      Now one straight line across the map. Hold for a month, and walk the
+      lookback out to four years.
+
+  - id: s4.camps
+    text: >
+      Under water. [[0.4]] Over the ridge. [[0.4]] And back under water.
+      [[0.55]] Momentum people stand here. Reversion people stand here. Neither
+      is wrong.
+
+  # ── §5  what the map does not know ────────────────────────────────────
+  - id: s5.gross
+    text: >
+      Two things this picture is not telling you. [[0.45]] The first is that
+      every height on it is gross.
+
+  - id: s5.cost
+    text: >
+      Every rebalance trades, and the near edge trades constantly. [[0.35]] The
+      one-month rule replaces ninety percent of what it holds, every month.
+
+  - id: s5.sag
+    text: >
+      Charge ten basis points a trade on the turnover these portfolios really
+      generate, and that edge sags. [[0.4]] The notch goes from minus fifty-five
+      to minus ninety-two.
+
+  - id: s5.worse
+    text: >
+      The second is worse. [[0.45]] I drew this map from a market whose rules
+      never changed, and I chose them.
+
+  - id: s5.one_path
+    text: >
+      You get one path, once. [[0.45]] Every height on your map has to be
+      estimated from the stretch you have already lived. [[0.5]] The ridge is
+      real here. Whether it is there next year, this picture cannot say.
+
+  # ── §6  payoff ────────────────────────────────────────────────────────
+  - id: s6.restate
+    text: >
+      So. [[0.55]] The same chart, two opposite bets. What decides which one is
+      right?
+
+  - id: s6.answer
+    text: >
+      Not the chart. [[0.4]] And not the market. [[0.5]] Two numbers. How far
+      back you look, and how long you hold.
+
+  - id: s6.same
+    text: >
+      It moved too far, it will come back. [[0.4]] It has been moving, it will
+      keep moving. [[0.45]] The same sentence, at two different horizons.
+
+  - id: s6.close
+    text: >
+      Which is why the horizon is not a detail of the strategy. [[0.4]] It is
+      the strategy.

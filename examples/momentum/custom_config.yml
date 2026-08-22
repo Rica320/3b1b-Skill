@@ -1,0 +1,44 @@
+# Starter ManimGL project config, adapted from 3b1b's own custom_config.yml
+# (github.com/3b1b/videos/blob/master/custom_config.yml) with his
+# personal machine-specific paths under `directories:` removed — those
+# pointed at his own Dropbox folder structure and aren't portable.
+#
+# Place a copy of this file (renamed to custom_config.yml) in the directory
+# you run `manimgl` from. It's picked up automatically.
+
+camera:
+  # 3b1b renders his own videos at 4K. Drop to (1920, 1080) for faster
+  # draft/iteration renders — see scripts/render.sh -l for an even
+  # faster low-quality path that doesn't require editing this file.
+  resolution: (1920, 1080)
+  # Pure black — the ManimGL library default is actually a dark charcoal
+  # grey; this line is what makes output match 3b1b's actual background.
+  background_color: "#000000"
+  fps: 30
+  background_opacity: 1.0
+
+text:
+  # CMU Serif keeps Text() visually consistent with the LaTeX serif
+  # typeface Tex() already renders. Requires `apt-get install fonts-cmu`
+  # (handled by scripts/setup_env.sh).
+  font: "CMU Serif"
+  alignment: "CENTER"
+
+tex:
+  template: "default"
+
+file_writer:
+  # Slight saturation boost on the encoded output, matching 3b1b's config.
+  saturation: 1.5
+
+window:
+  position_string: UR
+  monitor_index: 0
+  full_screen: False
+
+embed:
+  # Auto-reloads edited modules when using the interactive self.embed()
+  # workflow (see references/code_patterns.md).
+  autoreload: True
+
+ignore_manimlib_modules_on_reload: True

@@ -1,0 +1,346 @@
+{
+  "engine": "kokoro",
+  "voice": "am_michael",
+  "speed": 0.92,
+  "reference": null,
+  "sample_rate": 24000,
+  "total_duration": 334.77,
+  "beats": {
+    "s0.chart": {
+      "file": "s0.chart.wav",
+      "duration": 7.75,
+      "words": 24,
+      "wps": 3.1,
+      "hash": "405591bedfb3f84f",
+      "text": "Here is a stock that has gone up a long way over the past six months. [[0.35]] Nothing unusual about that. There are always some."
+    },
+    "s0.two": {
+      "file": "s0.two.wav",
+      "duration": 9.65,
+      "words": 27,
+      "wps": 2.8,
+      "hash": "77fcecbf48ac5e21",
+      "text": "Two people look at exactly this chart and say opposite things. [[0.45]] It has run too far, it will come back. [[0.4]] It is moving, it will keep moving."
+    },
+    "s0.real": {
+      "file": "s0.real.wav",
+      "duration": 9.35,
+      "words": 26,
+      "wps": 2.78,
+      "hash": "b3d5194d10b16c68",
+      "text": "These are not moods. They are both real strategies with real money behind them, and each one has years where it is the only thing working."
+    },
+    "s0.question": {
+      "file": "s0.question.wav",
+      "duration": 5.75,
+      "words": 13,
+      "wps": 2.26,
+      "hash": "71bcf304e495da56",
+      "text": "So. [[0.5]] The same chart, two opposite bets. What decides which one is right?"
+    },
+    "s1.measure": {
+      "file": "s1.measure.wav",
+      "duration": 7.78,
+      "words": 22,
+      "wps": 2.83,
+      "hash": "30e8b23f0c30a7f5",
+      "text": "The honest way to settle that is to stop arguing and measure it. [[0.35]] One chart proves nothing, so take the whole market."
+    },
+    "s1.cross": {
+      "file": "s1.cross.wav",
+      "duration": 8.28,
+      "words": 21,
+      "wps": 2.54,
+      "hash": "0e81212488a15ba7",
+      "text": "Two hundred and forty stocks, two hundred and fifty years. [[0.35]] This is a simulated market, and later that will matter twice."
+    },
+    "s1.signal": {
+      "file": "s1.signal.wav",
+      "duration": 8.31,
+      "words": 23,
+      "wps": 2.77,
+      "hash": "8d9f8a0c4d72c8e8",
+      "text": "For each stock, one number. What it did over the last six months. [[0.3]] Today's price, over the price six months ago, minus one."
+    },
+    "s1.rank": {
+      "file": "s1.rank.wav",
+      "duration": 6.23,
+      "words": 16,
+      "wps": 2.57,
+      "hash": "3c0ced4b3987165a",
+      "text": "Now sort the entire market by that number. [[0.45]] Buy the strongest tenth. Short the weakest tenth."
+    },
+    "s1.rule": {
+      "file": "s1.rule.wav",
+      "duration": 5.57,
+      "words": 19,
+      "wps": 3.41,
+      "hash": "7b4503cf61aa0d6d",
+      "text": "Wait a while, and then do it again. [[0.4]] That is the whole rule. There is nothing else in it."
+    },
+    "s1.result": {
+      "file": "s1.result.wav",
+      "duration": 8.16,
+      "words": 21,
+      "wps": 2.57,
+      "hash": "933bdb1d777e4596",
+      "text": "And over two hundred and fifty years of this market, it makes one point zero nine percent a month. [[0.5]] Momentum wins."
+    },
+    "s1.change": {
+      "file": "s1.change.wav",
+      "duration": 5.56,
+      "words": 12,
+      "wps": 2.16,
+      "hash": "00c2123ba557114d",
+      "text": "Except. [[0.45]] Change one number. Not the market. Not the rule. [[0.35]] The six."
+    },
+    "s1.one": {
+      "file": "s1.one.wav",
+      "duration": 8.55,
+      "words": 22,
+      "wps": 2.57,
+      "hash": "4dc5f60bb4ebc382",
+      "text": "Rank on the last month instead of the last six months. Same code, same market, same day. [[0.4]] Minus zero point five five."
+    },
+    "s1.four": {
+      "file": "s1.four.wav",
+      "duration": 4.25,
+      "words": 11,
+      "wps": 2.59,
+      "hash": "f3d70d998506b5fb",
+      "text": "Rank on the last four years. [[0.45]] Minus zero point one zero."
+    },
+    "s1.lesson": {
+      "file": "s1.lesson.wav",
+      "duration": 8.44,
+      "words": 22,
+      "wps": 2.61,
+      "hash": "347d28744ee2105c",
+      "text": "So, does momentum work, was never a question about the market. [[0.4]] It is a question about a number we picked without thinking."
+    },
+    "s2.second": {
+      "file": "s2.second.wav",
+      "duration": 5.86,
+      "words": 19,
+      "wps": 3.24,
+      "hash": "56a5478a9b8de6b3",
+      "text": "And there is a second number hidden in, do it again. [[0.4]] How long do you hold, before you re-sort?"
+    },
+    "s2.hold": {
+      "file": "s2.hold.wav",
+      "duration": 10.34,
+      "words": 26,
+      "wps": 2.51,
+      "hash": "628a7e091624aa0d",
+      "text": "Hold that same six-month signal for one month and it pays one point zero nine. Hold it two years and it pays six hundredths. [[0.35]] Same signal."
+    },
+    "s2.pair": {
+      "file": "s2.pair.wav",
+      "duration": 6.52,
+      "words": 20,
+      "wps": 3.07,
+      "hash": "67b7baa79a981ddc",
+      "text": "So a strategy is not a rule. [[0.45]] It is a pair of numbers. And every pair is a different strategy."
+    },
+    "s2.floor": {
+      "file": "s2.floor.wav",
+      "duration": 5.85,
+      "words": 14,
+      "wps": 2.39,
+      "hash": "1f64f28a424ec81a",
+      "text": "Lookback along one axis, holding period along the other. [[0.3]] Each step doubles the months."
+    },
+    "s2.dot": {
+      "file": "s2.dot.wav",
+      "duration": 4.37,
+      "words": 14,
+      "wps": 3.2,
+      "hash": "25f42582f7351192",
+      "text": "And everything we just built, all of it, [[0.35]] is one dot on this floor."
+    },
+    "s2.all": {
+      "file": "s2.all.wav",
+      "duration": 9.02,
+      "words": 17,
+      "wps": 1.88,
+      "hash": "4cae27d66a6f29ef",
+      "text": "So run all of them. [[0.4]] Forty-eight lookbacks, by twenty-four holding periods. Eleven hundred and fifty-two complete backtests."
+    },
+    "s2.height": {
+      "file": "s2.height.wav",
+      "duration": 6.36,
+      "words": 19,
+      "wps": 2.99,
+      "hash": "53e07cb4ea7b9272",
+      "text": "Every one of them has a number attached. What it paid. [[0.45]] Give each dot that number, as its height."
+    },
+    "s2.nothing": {
+      "file": "s2.nothing.wav",
+      "duration": 10.24,
+      "words": 26,
+      "wps": 2.54,
+      "hash": "2294d15613d7db8a",
+      "text": "[[0.4]] Nothing happened. [[0.7]] Every dot just moved, and from straight above you cannot see any of it. [[0.4]] Height is the one direction this view does not have."
+    },
+    "s3.move": {
+      "file": "s3.move.wav",
+      "duration": 0.93,
+      "words": 2,
+      "wps": 2.15,
+      "hash": "2f1ed2dc6a1361ba",
+      "text": "So move."
+    },
+    "s3.landscape": {
+      "file": "s3.landscape.wav",
+      "duration": 4.71,
+      "words": 15,
+      "wps": 3.18,
+      "hash": "8407ca8cf8097c1a",
+      "text": "They were all sitting at their own heights the whole time. [[0.5]] It is a landscape."
+    },
+    "s3.ridge": {
+      "file": "s3.ridge.wav",
+      "duration": 11.2,
+      "words": 33,
+      "wps": 2.95,
+      "hash": "6ad7002d28eaf19a",
+      "text": "Up here, ranking on three months to a year and holding for a month or three, the ground is orange. Buying winners pays. [[0.4]] The peak is one point two two percent a month."
+    },
+    "s3.corner": {
+      "file": "s3.corner.wav",
+      "duration": 15.71,
+      "words": 45,
+      "wps": 2.86,
+      "hash": "1dfe7200278897b6",
+      "text": "In the far corner, ranking on four years and holding for two, the ground is blue, and the same rule loses half a percent a month. [[0.45]] That is not a different market, or even a different theory. It is mean reversion, on the same map."
+    },
+    "s3.tie": {
+      "file": "s3.tie.wav",
+      "duration": 12.06,
+      "words": 30,
+      "wps": 2.49,
+      "hash": "891d9a82fa6c1afb",
+      "text": "And here is the part I did not expect. [[0.45]] The two lowest points on this map are minus zero point five five, [[0.3]] and minus zero point five five. [[0.5]] Opposite corners."
+    },
+    "s4.shape": {
+      "file": "s4.shape.wav",
+      "duration": 9.04,
+      "words": 25,
+      "wps": 2.77,
+      "hash": "6941563e386d2376",
+      "text": "That shape is not a coincidence, because I know exactly what went into this market. [[0.4]] Three things, and each owns a feature of the map."
+    },
+    "s4.bounce": {
+      "file": "s4.bounce.wav",
+      "duration": 12.51,
+      "words": 35,
+      "wps": 2.8,
+      "hash": "8adda2b5e2be1104",
+      "text": "One. Every price carries an error that is in today's number and gone from tomorrow's. [[0.35]] Rank on a single month and that noise is most of what you are ranking on. [[0.4]] That is the notch."
+    },
+    "s4.diffusion": {
+      "file": "s4.diffusion.wav",
+      "duration": 10.65,
+      "words": 29,
+      "wps": 2.72,
+      "hash": "9a219630eeb389fd",
+      "text": "Two. News is priced in slowly, over sixteen months here. [[0.4]] So a stock that moved on news last quarter is still moving on it now. [[0.35]] That is the ridge."
+    },
+    "s4.overshoot": {
+      "file": "s4.overshoot.wav",
+      "duration": 6.68,
+      "words": 16,
+      "wps": 2.4,
+      "hash": "b577cc499128e685",
+      "text": "Three. The move overshoots, and the overshoot is handed back over years. [[0.45]] That is the basin."
+    },
+    "s4.slice": {
+      "file": "s4.slice.wav",
+      "duration": 6.35,
+      "words": 19,
+      "wps": 2.99,
+      "hash": "f1342fb1cb07e17b",
+      "text": "Now one straight line across the map. Hold for a month, and walk the lookback out to four years."
+    },
+    "s4.camps": {
+      "file": "s4.camps.wav",
+      "duration": 9.98,
+      "words": 20,
+      "wps": 2.0,
+      "hash": "527e7f429496ff50",
+      "text": "Under water. [[0.4]] Over the ridge. [[0.4]] And back under water. [[0.55]] Momentum people stand here. Reversion people stand here. Neither is wrong."
+    },
+    "s5.gross": {
+      "file": "s5.gross.wav",
+      "duration": 5.72,
+      "words": 18,
+      "wps": 3.15,
+      "hash": "aa085c34a244ee03",
+      "text": "Two things this picture is not telling you. [[0.45]] The first is that every height on it is gross."
+    },
+    "s5.cost": {
+      "file": "s5.cost.wav",
+      "duration": 8.99,
+      "words": 21,
+      "wps": 2.34,
+      "hash": "62dfa3931540aa67",
+      "text": "Every rebalance trades, and the near edge trades constantly. [[0.35]] The one-month rule replaces ninety percent of what it holds, every month."
+    },
+    "s5.sag": {
+      "file": "s5.sag.wav",
+      "duration": 11.69,
+      "words": 26,
+      "wps": 2.22,
+      "hash": "31a3d6633163f260",
+      "text": "Charge ten basis points a trade on the turnover these portfolios really generate, and that edge sags. [[0.4]] The notch goes from minus fifty-five to minus ninety-two."
+    },
+    "s5.worse": {
+      "file": "s5.worse.wav",
+      "duration": 6.6,
+      "words": 19,
+      "wps": 2.88,
+      "hash": "28a4644b7fd42b24",
+      "text": "The second is worse. [[0.45]] I drew this map from a market whose rules never changed, and I chose them."
+    },
+    "s5.one_path": {
+      "file": "s5.one_path.wav",
+      "duration": 12.44,
+      "words": 36,
+      "wps": 2.89,
+      "hash": "8ea6c744ed96ff25",
+      "text": "You get one path, once. [[0.45]] Every height on your map has to be estimated from the stretch you have already lived. [[0.5]] The ridge is real here. Whether it is there next year, this picture cannot say."
+    },
+    "s6.restate": {
+      "file": "s6.restate.wav",
+      "duration": 5.8,
+      "words": 13,
+      "wps": 2.24,
+      "hash": "c5fcd6485c3cd6ca",
+      "text": "So. [[0.55]] The same chart, two opposite bets. What decides which one is right?"
+    },
+    "s6.answer": {
+      "file": "s6.answer.wav",
+      "duration": 6.98,
+      "words": 19,
+      "wps": 2.72,
+      "hash": "7f9ed20cfbded6fe",
+      "text": "Not the chart. [[0.4]] And not the market. [[0.5]] Two numbers. How far back you look, and how long you hold."
+    },
+    "s6.same": {
+      "file": "s6.same.wav",
+      "duration": 8.69,
+      "words": 23,
+      "wps": 2.65,
+      "hash": "8a47ac30e4b2d4b4",
+      "text": "It moved too far, it will come back. [[0.4]] It has been moving, it will keep moving. [[0.45]] The same sentence, at two different horizons."
+    },
+    "s6.close": {
+      "file": "s6.close.wav",
+      "duration": 5.85,
+      "words": 16,
+      "wps": 2.74,
+      "hash": "bc27e19425516033",
+      "text": "Which is why the horizon is not a detail of the strategy. [[0.4]] It is the strategy."
+    }
+  }
+}
