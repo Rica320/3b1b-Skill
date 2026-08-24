@@ -1,0 +1,347 @@
+# Narration for "The Law of Root".
+#
+# The only place the spoken words exist. root_video.py refers to these ids and
+# contains no prose, so the voice can be recast without touching the animation.
+#
+#   ../../skills/3b1b-math-animation/scripts/tts.py script.yaml --out audio
+#
+# [[0.4]] is an explicit pause of that many seconds, cut in exactly.
+#
+# Every rule claim below is cited in verify_root.py and re-derived there from
+# woodland.py. No value printed on a faction board (VP awards, building costs,
+# service prices) is asserted - the rules reference does not contain them.
+
+voice:
+  engine: kokoro
+  name: am_michael
+  speed: 0.92
+
+beats:
+
+  # ── §0  the question ────────────────────────────────────────────────────
+  - id: s0.open
+    text: >
+      This is Root. [[0.35]] It looks like a board game about woodland
+      animals, and it is a war game.
+
+  - id: s0.asym
+    text: >
+      It has one strange property. No two players are playing by the same
+      rules. The cat scores by building. The birds score by nesting. The
+      mouse alliance scores by making the forest sympathetic to her cause.
+
+  - id: s0.pieces
+    text: >
+      Different pieces, [[0.3]] different actions, [[0.3]] different ways to
+      win. Six factions, [[0.3]] six separate rulebooks.
+
+  - id: s0.question
+    text: >
+      So what makes it one game?
+
+  # ── §1  the obvious answer, and how it fails ────────────────────────────
+  - id: s1.obvious
+    text: >
+      The obvious answer is the scoreboard. Everybody scores differently, but
+      everybody scores onto the same track, and the first player to reach
+      thirty points immediately wins.
+
+
+  - id: s1.corners
+    text: >
+      One finish line. [[0.4]] Except a shared finish line is not a shared
+      game. Suppose the cat builds in her corner and the birds nest in
+      theirs, and neither ever has to look at the other. Both scores climb.
+      Nothing has made them meet.
+
+  - id: s1.need
+    text: >
+      That is a race, not a war. Something has to force them into the same
+      room.
+
+  # ── §2  the ground, and one sentence ────────────────────────────────────
+  - id: s2.map
+    text: >
+      Here is the Woodland. Clearings, joined by paths. A clearing is
+      adjacent to every clearing a path links it to, and almost everything
+      in this game travels along those paths.
+
+  - id: s2.suit
+    text: >
+      Every clearing has a suit. [[0.3]] Fox, rabbit, or mouse. The cards
+      share those three, plus birds — and a bird card is wild, so it can be
+      treated as any suit you like.
+
+  - id: s2.slots
+    text: >
+      Every clearing has slots, shown as white boxes, and a building fills
+      one. Four start the game filled with ruins.
+
+
+  - id: s2.sentence
+    text: >
+      And now the sentence the whole game hangs on. [[0.5]] The ruler of a
+      clearing is the player with the most total warriors and buildings in it.
+
+  - id: s2.notcount
+    text: >
+      Tokens do not count. Pawns do not count. And if two players are tied,
+      nobody rules it at all.
+
+  - id: s2.cant
+    text: >
+      From up here you cannot see any of that. [[0.35]] You have to count.
+      [[0.5]] So stop looking at it like a map.
+
+  - id: s2.tilt
+    text: >
+      Warriors and buildings are the things that count, so let them be the
+      things that have height.
+
+  - id: s2.skyline
+    text: >
+      Rule is a skyline. [[0.4]] Tallest tower in the clearing holds it. Level
+      towers, and nobody does.
+
+  # ── §3  rule is a permission slip ───────────────────────────────────────
+  - id: s3.prize
+    text: >
+      Ruling a clearing is not a prize. [[0.35]] It is a permission slip.
+
+  - id: s3.move
+    text: >
+      To move, you take any number of your warriors from one clearing to one
+      adjacent clearing. And you must rule the origin, or the destination, or
+      both.
+
+  - id: s3.tie
+    text: >
+      Level the two towers, and the move becomes illegal. You cannot leave a
+      clearing you do not overtop, unless you already overtop where you are
+      going.
+
+  - id: s3.build
+    text: >
+      To build, you need a clearing you rule [[0.3]] and a slot that is
+      open.
+
+  - id: s3.craft
+    text: >
+      Even crafting is paid in clearings. A card's cost is paid by
+      activating your own pieces, and a piece's suit is the suit of its
+      clearing.
+
+  - id: s3.bolted
+    text: >
+      So whatever private machine your faction runs on, it is bolted to this
+      board. There is no corner to be left alone in.
+
+  # ── §4  the turn, and the loud action ───────────────────────────────────
+  - id: s4.phases
+    text: >
+      A turn is three phases, always in this order. Birdsong, before the
+      day. Daylight, where most of the acting happens. Evening, where you
+      draw and some factions score.
+
+  - id: s4.quiet
+    text: >
+      Most of Daylight is quiet. Draw, craft, move, build. [[0.4]] Battle is
+      the loud one.
+
+  - id: s4.choose
+    text: >
+      You choose a clearing where you have warriors, choose somebody else
+      standing there to defend, and roll both dice.
+
+  - id: s4.rolls
+    text: >
+      The attacker deals hits equal to the higher roll. The defender deals hits
+      equal to the lower one.
+
+  - id: s4.cap
+    text: >
+      But you can never deal more hits from the dice than you have warriors in
+      that clearing. The roll is only a ceiling. [[0.35]] Your tower is the
+      real limit.
+
+  - id: s4.defenceless
+    text: >
+      And if the defender has no warriors there at all, the attacker deals one
+      extra hit.
+
+  - id: s4.simul
+    text: >
+      Then both sides deal their hits at the same time. Warriors come off
+      first. Buildings and tokens only once every warrior is gone.
+
+  - id: s4.vp
+    text: >
+      Every enemy building or token you remove is worth a victory point.
+      [[0.4]] And the skyline changes hands.
+
+  # ── §5  six factions, six edits to one sentence ─────────────────────────
+  - id: s5.turn
+    text: >
+      Now the part that looks like chaos. Six factions, six rulebooks.
+      [[0.35]] And every one of them is written against that same sentence.
+
+  - id: s5.cat
+    text: >
+      The Marquise de Cat plays it straight, and hardest. She scores by
+      building, and a building is height, so her score and her grip on the
+      map are the same object.
+
+  - id: s5.cat2
+    text: >
+      Building costs wood, and the wood comes from sawmills she already
+      built. Her engine feeds itself, as long as she holds the ground under
+      it.
+
+  - id: s5.eyrie
+    text: >
+      The Eyrie Dynasties edit the sentence. They rule a clearing when they
+      are merely tied for most. [[0.35]] Never an empty one, but a tie is
+      enough.
+
+  - id: s5.eyrie2
+    text: >
+      They score every Evening for roosts standing on the map, so they grow
+      faster than anyone. And they are bound by the Decree. Cards go onto it
+      every Birdsong, and every action on it must be taken. Miss one, and
+      they fall into turmoil.
+
+  - id: s5.alliance
+    text: >
+      The Woodland Alliance ignores the sentence. She scores by placing
+      sympathy, and sympathy is a token, [[0.3]] and tokens do not count
+      toward rule. Her score is invisible to the skyline.
+
+  - id: s5.outrage
+    text: >
+      It is worse than that. Move warriors into a clearing she has made
+      sympathetic, and Outrage makes you hand her a card. Attacking her
+      funds her.
+
+  - id: s5.vagabond
+    text: >
+      The Vagabond deletes the sentence. He is a pawn, not a warrior. He
+      cannot rule a clearing, he cannot stop anyone else ruling one, and he
+      cannot be removed from the map. He walks where he likes, and scores by
+      carrying items and making friends with people busy killing each other.
+
+
+  - id: s5.cult
+    text: >
+      The Lizard Cult overwrites the sentence. Wherever the Cult has a
+      garden, the Cult rules. Height does not enter into it.
+
+  - id: s5.riverfolk
+    text: >
+      And the Riverfolk Company goes around it. A river runs through the
+      Woodland, and it is a path for them and for nobody else. They swim
+      along it no matter who rules either end, and then they sell passage to
+      the other five.
+
+  # ── §6  three turns ─────────────────────────────────────────────────────
+  - id: s6.watch
+    text: >
+      Watch it run.
+
+  - id: s6.setup
+    text: >
+      Setup. The Marquise takes a corner, puts her keep in it, and garrisons
+      one warrior in every clearing except the corner diagonally opposite.
+
+  - id: s6.setup2
+    text: >
+      Which is where the Eyrie start. [[0.4]] The Alliance starts with
+      nothing on the board at all.
+
+  - id: s6.t1
+    text: >
+      Turn one, the Marquise. Birdsong, a wood token appears at each sawmill.
+      Daylight, three actions.
+
+  - id: s6.t1build
+    text: >
+      She builds. The wood is spent, the slot fills, and she scores the
+      points the space underneath reveals.
+
+  - id: s6.t1march
+    text: >
+      Then she marches, which is two moves, and her towers get taller where
+      she wants them. Evening, she draws.
+
+  - id: s6.t2
+    text: >
+      Turn two, the Eyrie. Birdsong, a card goes onto the Decree. Daylight,
+      they must resolve every column of it, left to right.
+
+  - id: s6.t2battle
+    text: >
+      Move: five birds cross into the clearing the cat has just built in.
+      [[0.3]] Battle: the rabbit card lets them fight there.
+
+  - id: s6.t2dice
+    text: >
+      Higher roll to the attacker, lower to the defender, both capped by the
+      warriors actually standing there, both dealt at the same moment.
+
+  - id: s6.t2flip
+    text: >
+      The cat's tower falls to two, and the clearing is the Eyrie's. They
+      build a roost on it. Evening, the birds score for every roost on the
+      map.
+
+  - id: s6.t3
+    text: >
+      Turn three, the Alliance. Birdsong, she spreads sympathy, spending
+      supporters that match the clearing, plus one more because three or
+      more enemy warriors are standing in it.
+
+  - id: s6.t3score
+    text: >
+      She scores. [[0.4]] And she has still not placed a single warrior on the
+      board.
+
+  - id: s6.reply
+    text: >
+      Now watch what the obvious reply costs the cat.
+
+  - id: s6.outrage
+    text: >
+      She marches in to stamp it out. [[0.35]] Outrage. She hands the
+      Alliance a card matching that clearing.
+
+  - id: s6.revolt
+    text: >
+      Which the Alliance spends, next Birdsong, on a revolt. Every enemy piece
+      in the clearing is removed, and a base goes up in their place.
+
+  - id: s6.revolt2
+    text: >
+      A point for the sawmill. A point for the roost. [[0.4]] And the
+      clearing belongs to the faction that never marched a single warrior
+      into it.
+
+  # ── §7  payoff ──────────────────────────────────────────────────────────
+  - id: s7.restate
+    text: >
+      So. [[0.4]] No two players in Root are playing by the same rules. What
+      makes it one game?
+
+  - id: s7.answer
+    text: >
+      They are not playing different games. They are playing different answers
+      to the same question. [[0.5]] Who holds this clearing?
+
+  - id: s7.each
+    text: >
+      The cat answers with buildings. The birds answer by tying. The alliance
+      answers by not needing to hold it. The vagabond answers that he never
+      can.
+
+  - id: s7.close
+    text: >
+      Six rulebooks. One sentence. One map. [[0.5]] The rules differ. The
+      ground does not.
